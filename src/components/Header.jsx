@@ -1,27 +1,37 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { SiIndeed } from 'react-icons/si'
 
 const Header = () => {
-
+  const activeLink = 'bg-teal-700 text-white px-3 py-2 rounded-md text-sm font-medium';
+  const normalLink = 'text-teal-300 hover:bg-teal-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium';
   return (
     <nav className='bg-teal-800'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex items-center justify-between h-16'>
           <div className='flex items-center'>
             <div className='flex-shrink-0'>
-              <img className='h-8 w-8' src='https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg' alt='Workflow' />
+              <Link to="/" className='items-center gap-2 ml-3 flex text-xl font-semibold tracking-wide text-white'>
+                <SiIndeed /> <span>iMalaria</span>
+              </Link>
             </div>
             <div className='hidden md:block'>
               <div className='ml-10 flex items-baseline space-x-4'>
-                {/* <!-- Current: 'bg-teal-900 text-white', Default: 'text-teal-300 hover:bg-teal-700 hover:text-white' --> */}
-                <a href='/' className='bg-teal-900 text-white px-3 py-2 rounded-md text-sm font-medium' aria-current='page'>I-Malaria</a>
+                <NavLink to='/update' style={({ isActive }) => ({ backgroundColor: isActive })} className={({ isActive }) => isActive ? activeLink : normalLink} >
+                  <span className="capitalize">Malaria Update</span>
+                </NavLink>
 
-                <a href='/update' className='text-teal-300 hover:bg-teal-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Malaria Update</a>
+                <NavLink to='/map' style={({ isActive }) => ({ backgroundColor: isActive })} className={({ isActive }) => isActive ? activeLink : normalLink} >
+                  <span className="capitalize">Near Me</span>
+                </NavLink>
 
-                <a href='/' className='text-teal-300 hover:bg-teal-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Near Me</a>
+                <NavLink to='/forecast' style={({ isActive }) => ({ backgroundColor: isActive })} className={({ isActive }) => isActive ? activeLink : normalLink} >
+                  <span className="capitalize">Weather Forecast</span>
+                </NavLink>
 
-                <a href='/' className='text-teal-300 hover:bg-teal-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Weather Forecast</a>
-
-                <a href='/' className='text-teal-300 hover:bg-teal-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Emergency Contacts</a>
+                <NavLink to='/contact' style={({ isActive }) => ({ backgroundColor: isActive })} className={({ isActive }) => isActive ? activeLink : normalLink} >
+                  <span className="capitalize">Emergency Contacts</span>
+                </NavLink>
               </div>
             </div>
           </div>
@@ -55,8 +65,8 @@ const Header = () => {
                   To: 'transform opacity-0 scale-95'
               --> */}
                 {/* <div className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none' role='menu' aria-orientation='vertical' aria-labelledby='user-menu-button' tabindex='-1'> */}
-                  {/* <!-- Active: 'bg-teal-100', Not Active: '' --> */}
-                  {/* <a href='#' className='block px-4 py-2 text-sm text-teal-700' role='menuitem' tabindex='-1' id='user-menu-item-0'>Your Profile</a>
+                {/* <!-- Active: 'bg-teal-100', Not Active: '' --> */}
+                {/* <a href='#' className='block px-4 py-2 text-sm text-teal-700' role='menuitem' tabindex='-1' id='user-menu-item-0'>Your Profile</a>
 
                   <a href='#' className='block px-4 py-2 text-sm text-teal-700' role='menuitem' tabindex='-1' id='user-menu-item-1'>Settings</a>
 
@@ -122,12 +132,12 @@ const Header = () => {
             </button>
           </div>
           {/* <div className='mt-3 px-2 space-y-1'>
-                        <a href='#' className='block px-3 py-2 rounded-md text-base font-medium text-teal-400 hover:text-white hover:bg-teal-700'>Your Profile</a>
+                <a href='#' className='block px-3 py-2 rounded-md text-base font-medium text-teal-400 hover:text-white hover:bg-teal-700'>Your Profile</a>
 
-                        <a href='#' className='block px-3 py-2 rounded-md text-base font-medium text-teal-400 hover:text-white hover:bg-teal-700'>Settings</a>
+                <a href='#' className='block px-3 py-2 rounded-md text-base font-medium text-teal-400 hover:text-white hover:bg-teal-700'>Settings</a>
 
-                        <a href='#' className='block px-3 py-2 rounded-md text-base font-medium text-teal-400 hover:text-white hover:bg-teal-700'>Sign out</a>
-                    </div> */}
+                <a href='#' className='block px-3 py-2 rounded-md text-base font-medium text-teal-400 hover:text-white hover:bg-teal-700'>Sign out</a>
+            </div> */}
         </div>
       </div>
     </nav>

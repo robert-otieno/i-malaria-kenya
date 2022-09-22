@@ -1,0 +1,6 @@
+export { default as Country } from './Country'
+export { default as Home } from './Home'
+export { default as MalariaUpdate } from './MalariaUpdate'
+export { default as Map } from './Map'
+export { default as Contact } from './Contact'
+export { default as WeatherForecast } from './WeatherForecast'

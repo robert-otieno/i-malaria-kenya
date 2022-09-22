@@ -34,32 +34,24 @@ const Map = () => {
       map.current.addControl(geocoder, 'top-left');
 
       const customAttributionControl = new mapboxgl.AttributionControl({
-        customAttribution: 'Roke/Joy Mwamsidu'
+        customAttribution: 'Joy Mwamsidu'
       });
       map.current.addControl(customAttributionControl, 'top-right');
     });
   }, []);
 
   return (
-    <>
-      <header className='bg-white shadow'>
-        <div className='max-w-7xl mx-auto py-4 px-2 sm:px-4 lg:px-6'>
-          <h1 className='text-2xl font-semibold text-teal-900'>I-Malaria Kenya</h1>
-          <div id="geocoder" className=""></div>
-        </div>
-      </header>
-      <main>
-        <div className='max-w-7xl mx-auto py-6 sm:px-6 lg:px-8'>
-          {/* <!-- Replace with your content --> */}
-          <div className='px-4 py-6 sm:px-0'>
-            <div className='h-96'>
-              <div ref={mapContainer} className='relative h-full'/>
-            </div>
+    <main>
+      <div className='max-w-7xl mx-auto py-6 sm:px-6 lg:px-8'>
+        {/* <!-- Replace with your content --> */}
+        <div className='px-4 py-6 sm:px-0'>
+          <div className='h-96'>
+            <div ref={mapContainer} className='relative h-full'/>
           </div>
-          {/* <!-- /End replace --> */}
         </div>
-      </main>
-    </>
+        {/* <!-- /End replace --> */}
+      </div>
+    </main>
   )
 }
 
