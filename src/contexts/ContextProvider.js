@@ -15,6 +15,7 @@ export const ContextProvider = ({ children }) => {
     // const [isClicked, setIsClicked] = useState(initialState)
     // const [screenSize, setScreenSize] = useState(undefined)
     const [countriesData, setCountriesData] = useState([])
+    const [countryId, setCountryId] = useState('')
     // const [currentColor, setCurrentColor] = useState('#03C9D7')
     // const [currentMode, setCurrentMode] = useState('Light')
     // const [themeSettings, setThemeSettings] = useState(false)
@@ -37,7 +38,7 @@ export const ContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <StateContext.Provider value={{ countriesData }}>
+        <StateContext.Provider value={{ countriesData, countryId, setCountryId }}>
             {children}
         </StateContext.Provider>
     )
