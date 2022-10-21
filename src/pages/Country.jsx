@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom'
 
 import { useStateContext } from '../contexts/ContextProvider'
 
+import { AiOutlineSafety, AiOutlineWarning } from 'react-icons/ai'
+import { CgDanger } from 'react-icons/cg'
+
 const Country = () => {
   const { countryId } = useParams()
   const { countriesData, setCountryId } = useStateContext()
@@ -487,6 +490,8 @@ const Country = () => {
     })
   }
 
+  // const 
+
   useEffect(() => {
     setCountryId(countryId)
   }, [])
@@ -495,15 +500,19 @@ const Country = () => {
 
   return (
     <div className="flex gap-10 flex-wrap justify-center">
-      <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl md:w-780">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+      <div className="bg-white m-3 p-4 rounded-2xl md:w-780">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"> */}
+        <div  className="grid grid-cols-1 gap-4">
           {countryId === 'ken' ? (
             counties.map((county, i) => (
               <>
-                <div data-popover-target={`popover-hover-${i}`} data-popover-trigger="hover" key={i} className={`flex flex-col border cursor-pointer ${county.malariaData[2021] > 100000 ? 'bg-red-100 hover:bg-red-300' : county.malariaData[2021] > 50000 ? 'bg-orange-100 hover:bg-orange-300' : 'bg-green-100 hover:bg-green-300'} shadow-md  dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700`}>
+                <div data-popover-target={`popover-hover-${i}`} data-popover-trigger="hover" key={i} className={`flex items-center justify-center border cursor-pointer ${county.malariaData[2021] > 100000 ? 'bg-red-100 hover:bg-red-300' : county.malariaData[2021] > 50000 ? 'bg-orange-100 hover:bg-orange-300' : 'bg-green-100 hover:bg-green-300'} shadow-md  dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700`}>
                   <div className="flex flex-col justify-between p-4 leading-normal">
                     <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white pointer-events-none">{county.name}</h5>
                   </div>
+                  <span className='text-2xl'>
+                  {county.malariaData[2021] > 100000 ? <CgDanger /> : county.malariaData[2021] > 50000 ? <AiOutlineWarning /> : <AiOutlineSafety />}
+                  </span>
                 </div>
 
                 <div data-popover id={`popover-hover-${i}`} role="tooltip" className="inline-block absolute invisible z-10 w-64 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm opacity-0 transition-opacity duration-300 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
