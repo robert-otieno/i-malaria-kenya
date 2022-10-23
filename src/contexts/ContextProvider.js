@@ -34,7 +34,6 @@ export const ContextProvider = ({ children }) => {
 
     useEffect(() => {
         getCountriesData().then((data) => setCountriesData(data))
-        // malariaData()
     }, [])
 
     return (

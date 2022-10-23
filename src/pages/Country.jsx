@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, NavLink } from 'react-router-dom'
 
 import { useStateContext } from '../contexts/ContextProvider'
 
-import { AiOutlineSafety, AiOutlineWarning } from 'react-icons/ai'
-import { CgDanger } from 'react-icons/cg'
+import { BsFillInfoCircleFill } from 'react-icons/bs'
+import { RiArrowRightSFill } from 'react-icons/ri'
+import { TiArrowBack } from 'react-icons/ti'
 
 const Country = () => {
   const { countryId } = useParams()
@@ -490,8 +491,6 @@ const Country = () => {
     })
   }
 
-  // const 
-
   useEffect(() => {
     setCountryId(countryId)
   }, [])
@@ -499,41 +498,41 @@ const Country = () => {
   const country = countryDetails(countriesData, countryId)
 
   return (
-    <div className="flex gap-10 flex-wrap justify-center">
-      <div className="bg-white m-3 p-4 rounded-2xl md:w-780">
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"> */}
-        <div  className="grid grid-cols-1 gap-4">
-          {countryId === 'ken' ? (
-            counties.map((county, i) => (
-              <>
-                <div data-popover-target={`popover-hover-${i}`} data-popover-trigger="hover" key={i} className={`flex items-center justify-center border cursor-pointer ${county.malariaData[2021] > 100000 ? 'bg-red-100 hover:bg-red-300' : county.malariaData[2021] > 50000 ? 'bg-orange-100 hover:bg-orange-300' : 'bg-green-100 hover:bg-green-300'} shadow-md  dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700`}>
-                  <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white pointer-events-none">{county.name}</h5>
-                  </div>
-                  <span className='text-2xl'>
-                  {county.malariaData[2021] > 100000 ? <CgDanger /> : county.malariaData[2021] > 50000 ? <AiOutlineWarning /> : <AiOutlineSafety />}
-                  </span>
-                </div>
-
-                <div data-popover id={`popover-hover-${i}`} role="tooltip" className="inline-block absolute invisible z-10 w-64 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm opacity-0 transition-opacity duration-300 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
-                  <div className="py-2 px-3 bg-gray-100 rounded-t-lg border-b border-gray-200 dark:border-gray-600 dark:bg-gray-700">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Popover hover</h3>
-                  </div>
-                  <div className="py-2 px-3">
-                    <p>And here's some amazing content. It's very engaging. Right?</p>
-                  </div>
-                  <div data-popper-arrow></div>
-                </div>
-              </>
-            )))
-
-            : (
-              <div className='text-2xl'>No data Available at the moment</div>
-            )}
-
-
+    <div className="h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto p-4 max-w-6xl mx-auto scrollbar-hide">
+      {countryId === 'ken' ? (
+        <div className="w-full text-sm font-semibold text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          {counties.map((county, i) => (
+            <div key={i} className='block py-2 px-4 w-full border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700 focus:text-teal-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white'>
+              <div className="flex items-center justify-between">
+                <h5 className="tracking-wide">{county.name}</h5>
+                <RiArrowRightSFill />
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      )
+
+        : (
+          <div className="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 dark:bg-blue-300" role="alert">
+            <div className="flex items-center">
+              <BsFillInfoCircleFill className='w-5 h-5 mr-2' />
+              <span className="sr-only">Info</span>
+              <h3 className="text-lg font-medium text-blue-900">Data Alert</h3>
+            </div>
+
+            <div className="mt-2 mb-4 text-sm text-blue-900">
+              No Data Available at the moment
+            </div>
+
+            <NavLink to='/' className="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-800 dark:hover:bg-blue-900">
+              <TiArrowBack className='w-5 h-5 mr-2' />
+              Back
+            </NavLink>
+          </div>
+        )}
+
+
+
     </div>
   )
 }

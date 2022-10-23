@@ -8,7 +8,6 @@ const App = () => {
   return (
     <div className='min-h-full'>
       <BrowserRouter>
-        <Header />
         <Routes>
           {/* Global */}
           <Route path="/" element={<Home />} />
@@ -24,6 +23,7 @@ const App = () => {
           <Route path="/:countryId/forecast" element={<WeatherForecast />} /> 
 
         </Routes>
+        <Header />
       </BrowserRouter>
     </div>
   )
