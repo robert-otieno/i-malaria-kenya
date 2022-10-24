@@ -1,12 +1,12 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Header } from './components'
+import { Footer } from './components'
 import { Home, Country, MalariaUpdate, Map, Contact, WeatherForecast } from './pages'
 
 const App = () => { 
 
   return (
-    <div className='min-h-full'>
+    <div className='relative min-h-full max-w-sm mx-auto border border-teal-600'>
       <BrowserRouter>
         <Routes>
           {/* Global */}
@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/:countryId/forecast" element={<WeatherForecast />} /> 
 
         </Routes>
-        <Header />
+        <Footer />
       </BrowserRouter>
     </div>
   )

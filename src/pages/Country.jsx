@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams, NavLink } from 'react-router-dom'
+import { Header } from '../components'
 
 import { useStateContext } from '../contexts/ContextProvider'
 
@@ -496,44 +497,43 @@ const Country = () => {
   }, [])
 
   const country = countryDetails(countriesData, countryId)
+  // console.log(country.name.common)
 
   return (
-    <div className="h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto p-4 max-w-6xl mx-auto scrollbar-hide">
-      {countryId === 'ken' ? (
-        <div className="w-full text-sm font-semibold text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-          {counties.map((county, i) => (
-            <div key={i} className='block py-2 px-4 w-full border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700 focus:text-teal-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white'>
-              <div className="flex items-center justify-between">
-                <h5 className="tracking-wide">{county.name}</h5>
-                <RiArrowRightSFill />
+    <>
+      <div className='bg-teal-800 p-3 space-y-2 sticky top-0'>
+        <Header title={country.name.common} />
+      </div>
+      <div className="h-screen overflow-auto scrollbar-hide">
+
+        {countryId === 'ken' ? (
+          <div className="w-full text-sm font-semibold text-gray-900 bg-white dark:bg-gray-700 dark:text-white">
+            {counties.map((county, i) => (
+              <div key={i} className='block py-2 px-4 w-full border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700 focus:text-teal-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white'>
+                <div className="flex items-center justify-between">
+                  <h5 className="tracking-wide">{county.name}</h5>
+                  <RiArrowRightSFill />
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+
+          : (
+            <div className="p-4 m-4 border border-teal-300 rounded-lg bg-teal-50 dark:bg-teal-300" role="alert">
+              <div className="flex items-center">
+                <BsFillInfoCircleFill className='w-5 h-5 mr-2 animate-pulse text-blue-500' />
+                <span className="sr-only">Info</span>
+                <h3 className="text-lg font-medium text-teal-900">Data Alert</h3>
+              </div>
+
+              <div className="mt-2 mb-4 text-sm text-teal-900">
+                No Data Available at the moment
               </div>
             </div>
-          ))}
-        </div>
-      )
-
-        : (
-          <div className="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 dark:bg-blue-300" role="alert">
-            <div className="flex items-center">
-              <BsFillInfoCircleFill className='w-5 h-5 mr-2' />
-              <span className="sr-only">Info</span>
-              <h3 className="text-lg font-medium text-blue-900">Data Alert</h3>
-            </div>
-
-            <div className="mt-2 mb-4 text-sm text-blue-900">
-              No Data Available at the moment
-            </div>
-
-            <NavLink to='/' className="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-800 dark:hover:bg-blue-900">
-              <TiArrowBack className='w-5 h-5 mr-2' />
-              Back
-            </NavLink>
-          </div>
-        )}
-
-
-
-    </div>
+          )}
+      </div>
+    </>
   )
 }
 
