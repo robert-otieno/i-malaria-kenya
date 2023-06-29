@@ -1,55 +1,55 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { SiIndeed } from 'react-icons/si'
-import { HiMenu, HiX, HiOutlineBell } from "react-icons/hi"
+// import { HiMenu, HiX, HiOutlineBell } from "react-icons/hi"
 
-import { useStateContext } from '../contexts/ContextProvider'
-import { useState } from 'react'
+// import { useStateContext } from '../contexts/ContextProvider'
+// import { useState } from 'react'
 
 const Footer = () => {
-  const currentLink = 'bg-teal-900 text-white px-3 py-2 rounded-md text-sm font-medium'
-  const defaultLink = 'text-teal-300 hover:bg-teal-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
+  // const currentLink = 'bg-teal-900 text-white px-3 py-2 rounded-md text-sm font-medium'
+  // const defaultLink = 'text-teal-300 hover:bg-teal-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
 
-  const { countryId } = useStateContext()
-  const [menuState, setMenuState] = useState(false)
+  // const { countryId } = useStateContext()
+  // const [menuState, setMenuState] = useState(false)
 
-  const globalLinks = [
-    {
-      name: 'Malaria Update',
-      uri: 'update',
-    },
-    {
-      name: 'Near Me',
-      uri: 'map',
-    },
-    {
-      name: 'Weather Forecast',
-      uri: 'forecast',
-    },
-    {
-      name: 'Emergency Contacts',
-      uri: 'contact',
-    },
-  ]
+  // const globalLinks = [
+  //   {
+  //     name: 'Malaria Update',
+  //     uri: 'update',
+  //   },
+  //   {
+  //     name: 'Near Me',
+  //     uri: 'map',
+  //   },
+  //   {
+  //     name: 'Weather Forecast',
+  //     uri: 'forecast',
+  //   },
+  //   {
+  //     name: 'Emergency Contacts',
+  //     uri: 'contact',
+  //   },
+  // ]
 
-  const localLinks = [
-    {
-      name: 'Malaria Update',
-      uri: `${countryId}/update`,
-    },
-    {
-      name: 'Near Me',
-      uri: `${countryId}/map`,
-    },
-    {
-      name: 'Weather Forecast',
-      uri: `${countryId}/forecast`,
-    },
-    {
-      name: 'Emergency Contacts',
-      uri: `${countryId}/contact`,
-    },
-  ]
+  // const localLinks = [
+  //   {
+  //     name: 'Malaria Update',
+  //     uri: `${countryId}/update`,
+  //   },
+  //   {
+  //     name: 'Near Me',
+  //     uri: `${countryId}/map`,
+  //   },
+  //   {
+  //     name: 'Weather Forecast',
+  //     uri: `${countryId}/forecast`,
+  //   },
+  //   {
+  //     name: 'Emergency Contacts',
+  //     uri: `${countryId}/contact`,
+  //   },
+  // ]
 
   return (
     <nav className='bg-teal-800 sticky bottom-0 w-full'>

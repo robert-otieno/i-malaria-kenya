@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
-import { useParams, NavLink } from 'react-router-dom'
+import React from 'react'
+import { useParams } from 'react-router-dom'
 import { Header } from '../components'
 
 import { useStateContext } from '../contexts/ContextProvider'
 
 import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { RiArrowRightSFill } from 'react-icons/ri'
-import { TiArrowBack } from 'react-icons/ti'
+// import { TiArrowBack } from 'react-icons/ti'
 
 const Country = () => {
   const { countryId } = useParams()
-  const { countriesData, setCountryId } = useStateContext()
+  const { countriesData } = useStateContext()
 
   const counties = [
     {
@@ -492,9 +492,9 @@ const Country = () => {
     })
   }
 
-  useEffect(() => {
-    setCountryId(countryId)
-  }, [])
+  // useEffect(() => {
+  //   setCountryId(countryId)
+  // }, [countryId])
 
   const country = countryDetails(countriesData, countryId)
   // console.log(country.name.common)

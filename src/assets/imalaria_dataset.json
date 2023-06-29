@@ -1,0 +1,79 @@
+[
+ {
+   "year": 2006,
+   "precipitation": 69.67845,
+   "relative_humidity": 0.755688826,
+   "temperature": 25.2572,
+   "malaria_incidence": 103.5
+ },
+ {
+   "year": 2007,
+   "precipitation": 54.48455,
+   "relative_humidity": 0.755699193,
+   "temperature": 25.05950833,
+   "malaria_incidence": 79.71
+ },
+ {
+   "year": 2008,
+   "precipitation": 53.72519167,
+   "relative_humidity": 0.755709561,
+   "temperature": 24.96576667,
+   "malaria_incidence": 66.34
+ },
+ {
+   "year": 2009,
+   "precipitation": 52.94185,
+   "relative_humidity": 0.755719929,
+   "temperature": 25.61305833,
+   "malaria_incidence": 62.77
+ },
+ {
+   "year": 2010,
+   "precipitation": 52.966125,
+   "relative_humidity": 0.755730296,
+   "temperature": 25.4422,
+   "malaria_incidence": 64.02
+ },
+ {
+   "year": 2011,
+   "precipitation": 53.097825,
+   "relative_humidity": 0.755740664,
+   "temperature": 25.32839167,
+   "malaria_incidence": 65.88
+ },
+ {
+   "year": 2012,
+   "precipitation": 63.01775,
+   "relative_humidity": 0.755751032,
+   "temperature": 25.24515,
+   "malaria_incidence": 68.79
+ },
+ {
+   "year": 2013,
+   "precipitation": 64.14095,
+   "relative_humidity": 0.755761399,
+   "temperature": 25.182175,
+   "malaria_incidence": 71.35
+ },
+ {
+   "year": 2014,
+   "precipitation": 51.22320833,
+   "relative_humidity": 0.755771767,
+   "temperature": 25.41145,
+   "malaria_incidence": 70.75
+ },
+ {
+   "year": 2015,
+   "precipitation": 64.33130833,
+   "relative_humidity": 0.755782134,
+   "temperature": 25.53763333,
+   "malaria_incidence": 68.77
+ },
+ {
+   "year": 2016,
+   "precipitation": 59.60018333,
+   "relative_humidity": 0.755792502,
+   "temperature": 25.75660833,
+   "malaria_incidence": 65.96
+ }
+]
