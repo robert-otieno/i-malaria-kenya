@@ -18,7 +18,7 @@ export const ContextProvider = ({ children }) => {
     const [countriesData, setCountriesData] = useState([]);
     const [countryId, setCountryId] = useState('');
     // get weather data from rapidapi
-    const [location, setLocation] = useState('');
+    // const [location, setLocation] = useState('');
     // const [currentColor, setCurrentColor] = useState('#03C9D7')
     // const [currentMode, setCurrentMode] = useState('Light')
     // const [themeSettings, setThemeSettings] = useState(false)
@@ -37,17 +37,17 @@ export const ContextProvider = ({ children }) => {
 
     // Define a functional component to handle the model training and prediction
 
-    const [model, setModel] = useState(null);
-    const [newData, setNewData] = useState([
-        {
-            "year": 2016,
-            "precipitation": 59.60018333,
-            "relative_humidity": 0.755792502,
-            "temperature": 25.75660833,
-            // "malaria_incidence": 65.96
-        }
-    ]);
-    const [predictions, setPredictions] = useState([]);
+    // const [model, setModel] = useState(null);
+    // const [newData, setNewData] = useState([
+    //     {
+    //         "year": 2016,
+    //         "precipitation": 59.60018333,
+    //         "relative_humidity": 0.755792502,
+    //         "temperature": 25.75660833,
+    //         // "malaria_incidence": 65.96
+    //     }
+    // ]);
+    // const [predictions, setPredictions] = useState([]);
 
     /**
      * When there is a malaria outbreak, a certain number of cases in a specific location within a certain timeframe must be surpassed,
@@ -69,19 +69,19 @@ export const ContextProvider = ({ children }) => {
     }, []);
 
     // load customised randomforest model
-    useEffect(() => {
-        // Function to load the model
-        const loadModel = async () => {
-            // load the Random Forest model
-            // const model = await tf.loadLayersModel('../../tfjs_model/model.json');
-            const model = await tf.loadLayersModel('http://127.0.0.1:8080/model.json');
+    // useEffect(() => {
+    //     // Function to load the model
+    //     const loadModel = async () => {
+    //         // load the Random Forest model
+    //         // const model = await tf.loadLayersModel('../../tfjs_model/model.json');
+    //         const model = await tf.loadLayersModel('model.json');
 
-            // Set the loaded model
-            setModel(model);
-        };
+    //         // Set the loaded model
+    //         setModel(model);
+    //     };
 
-        loadModel();
-    }, []);
+    //     loadModel();
+    // }, []);
 
     // useEffect(() => {
     //     // Function to make predictions
@@ -139,7 +139,7 @@ export const ContextProvider = ({ children }) => {
     // }, [newData]);
 
 
-    console.log(`new prediction: ${predictions}`);
+    // console.log(`new prediction: ${predictions}`);
 
     return (
         <StateContext.Provider value={{ countriesData, countryId, setCountryId }}>
