@@ -13,28 +13,28 @@ export const getCountriesData = async () => {
 
 // function to fetch daily weather data
 
-// const fetchWeatherData = async ({ location }) => {
-//   try {
-//     const { data } = await axios.request(
-//       {
-//         method: 'GET',
-//         url: 'https://weatherapi-com.p.rapidapi.com/current.json',
-//         params: { q: 'Kenya' },
-//         // params: { q: `${location}` },
-//         headers: {
-//           'X-RapidAPI-Key': '98d5f6252dmsh6d86ab92df5d9d5p1dc650jsn0e282e3b3c32',
-//           'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
-//         }
-//       }
-//     );
-//     const { last_updated, humidity, temp_c, precip_mm } = data.current;
-//     const csvData = `${last_updated},${temp_c},${humidity},${precip_mm}`;
-//     return csvData;
-//   } catch (error) {
-//     console.error('An error occurred while fetching weather data:', error);
-//     throw error;
-//   }
-// };
+const fetchWeatherData = async ({ location }) => {
+  try {
+    const { data } = await axios.request(
+      {
+        method: 'GET',
+        url: 'https://weatherapi-com.p.rapidapi.com/current.json',
+        params: { q: 'Kenya' },
+        // params: { q: `${location}` },
+        headers: {
+          'X-RapidAPI-Key': '98d5f6252dmsh6d86ab92df5d9d5p1dc650jsn0e282e3b3c32',
+          'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+        }
+      }
+    );
+    const { last_updated, humidity, temp_c, precip_mm } = data.current;
+    const csvData = `${last_updated},${temp_c},${humidity},${precip_mm}`;
+    return csvData;
+  } catch (error) {
+    console.error('An error occurred while fetching weather data:', error);
+    throw error;
+  }
+};
 
 // storage for retrieved weather data - firebase
 
