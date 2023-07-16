@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 // import { collection, getDocs } from "firebase/firestore";
 // import { db } from "../firebase";
-import { useParams } from "react-router-dom";
-import { Footer, Header } from "../components";
-import { AiOutlineSafety } from "react-icons/ai";
+
+import { AiOutlineAlert, AiOutlineSafety } from "react-icons/ai";
+import { TbAlertTriangle } from "react-icons/tb";
+
+import { Footer, Header, HeatMap, LineChart } from "../components";
+import Map from "./Map";
+
+import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
 
 export const County = () => {
   //   const runModel = async () => {
@@ -75,40 +81,94 @@ export const County = () => {
   //       });
   //   };
 
+  const location = useLocation();
+  const { countyName } = location.state;
   const { county } = useParams();
+  const [notification, setNotification] = useState("endemic");
+
+  // Filter the malaria data for the selected county
+  const countyData = malariaCasesPerYear[countyName];
+
+  console.log(countyName);
+
+  // Check if the county data exists
+  if (!countyData) {
+    return <div>No data available for the selected county.</div>;
+  }
+
+  // Generate the table rows for each year
+  const tableRows = Object.entries(countyData).map(([year, cases]) => (
+    <tr key={year}>
+      <td>{year}</td>
+      <td className="text-right font-bold">{cases.toLocaleString()}</td>
+    </tr>
+  ));
 
   return (
     <div className="flex flex-col min-h-screen overflow-auto">
       <div className="bg-teal-800 p-3 space-y-2 top-0">
-        <Header title={`County ${county}`} />
+        <Header nav={"/ken"} title={`${countyName} County`} />
       </div>
       <div className="inner-container flex flex-grow p-5">
         <div className="flex-grow pr-4">
           <div className="flex items-center mb-5 justify-between">
-            <h1 className="text-3xl text-teal-800">Malaria Alert System</h1>
+            <h1 className="text-3xl font-bold text-teal-800">Malaria Alert System</h1>
             <div className="predictive_model__btn">
-              <button class="btn w-64 text-white bg-teal-700 hover:text-teal-700 rounded-full">Run Predictive model</button>
+              <button className="btn md:w-36 lg:w-64 text-white bg-teal-700 hover:text-teal-700 rounded-full">Run Predictive model</button>
             </div>
           </div>
 
-          <div className="notification">
-            <div className="alert alert-success">
-              {/* <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg> */}
-              <AiOutlineSafety />
-              <span>Your purchase has been confirmed!</span>
-            </div>
+          <div className="notification mb-5">
+            {notification === "normal" ? (
+              <div className="alert alert-success">
+                <AiOutlineSafety size={24} />
+                <span className="capitalize">Low risk area!</span>
+              </div>
+            ) : notification === "alert" ? (
+              <div className="alert alert-warning">
+                <AiOutlineAlert size={24} />
+                <span className="capitalize">Alert: Investigation Needed!</span>
+              </div>
+            ) : (
+              <div className="alert alert-error">
+                <TbAlertTriangle size={24} />
+                <span className="capitalize">Action Required! Endemic Region.</span>
+              </div>
+            )}
           </div>
 
-          <div className="heat_map"></div>
+          {/* map */}
+          <div className="heat_map">
+            <div className="card w-full bg-base-100 shadow-xl">
+              <div className="card-body p-2 h-[540px] map">
+                <HeatMap />
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="inner-container__right flex-1">
-          <h3 className="subtitle">Cases per individual stations</h3>
-          {/* table */}
-          <h3 className="subtitle">Recent malaria cases &gt; last 5 weeks</h3>
-          {/* chart */}
+          <div className="card w-full bg-base-100 shadow-xl">
+            <div className="card-body p-4">
+              <h3 className="card-title capitalize">total malaria cases per year over the last 5 years for {`${countyName} County`}</h3>
+              {/* table */}
+              <div className="overflow-x-auto">
+                <table className="table table-zebra">
+                  <thead>
+                    <tr>
+                      <th>Year</th>
+                      <th className="text-right">Total Cases</th>
+                    </tr>
+                  </thead>
+                  <tbody>{tableRows}</tbody>
+                </table>
+              </div>
+              <h3 className="card-title capitalize my-3">Malaria Cases over time</h3>
+
+              {/* chart */}
+              <LineChart data={countyData} height={175} />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -118,7 +178,7 @@ export const County = () => {
         <div className="weather_forecast"></div>
       </div> */}
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

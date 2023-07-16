@@ -6,6 +6,7 @@ import { useStateContext } from "../contexts/ContextProvider";
 
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { RiArrowRightSFill } from "react-icons/ri";
+
 import counties from "../assets/counties.json";
 
 const Country = () => {
@@ -23,7 +24,7 @@ const Country = () => {
   return (
     <>
       <div className="bg-teal-800 p-3 space-y-2 sticky top-0">
-        <Header title={`${country.name.common}n Counties`} />
+        <Header nav={"/"} title={`${country.name.common}n Counties`} />
       </div>
       <div className="h-screen overflow-auto scrollbar-hide">
         {countryId === "ken" ? (
@@ -32,6 +33,7 @@ const Country = () => {
               <NavLink
                 to={`/ken/${county.code}`}
                 key={i}
+                state={{ countyName: county.name }}
                 className="block py-2 px-4 w-full border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700 focus:text-teal-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white"
               >
                 <div className="flex items-center justify-between">

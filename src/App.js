@@ -1,8 +1,9 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Footer } from "./components";
+// import { Footer } from "./components";
 import { Home, Country, MalariaUpdate, Map, Contact, WeatherForecast } from "./pages";
 import { County } from "./pages/County";
+import "leaflet/dist/leaflet.css";
 
 const App = () => {
   return (

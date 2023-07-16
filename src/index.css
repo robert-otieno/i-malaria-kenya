@@ -5,3 +5,8 @@
 body {
     font-size: 13px;
 }
+
+.map .leaflet-container {
+    height: 100%;
+    border-radius: 12px;
+}

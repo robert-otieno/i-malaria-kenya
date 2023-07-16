@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getCountriesData } from "../api/malariaAPI";
+// import { total_malaria_cases_per_year } from "../utilities/functions";
 
 const StateContext = createContext();
 
