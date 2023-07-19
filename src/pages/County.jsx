@@ -1,90 +1,18 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-// import { collection, getDocs } from "firebase/firestore";
-// import { db } from "../firebase";
+import { useLocation } from "react-router-dom";
 
 import { AiOutlineAlert, AiOutlineSafety } from "react-icons/ai";
 import { TbAlertTriangle } from "react-icons/tb";
 
-import { Footer, Header, HeatMap, LineChart } from "../components";
-import Map from "./Map";
+import { Header, HeatMap, LineChart } from "../components";
 
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
 
 export const County = () => {
-  //   const runModel = async () => {
-  //     try {
-  //       const weatherDataRef = collection(db, "weatherData");
-  //       const snapshot = await getDocs(weatherDataRef);
-  //       const weatherData = [];
-
-  //       snapshot.forEach((doc) => {
-  //         const data = doc.data();
-  //         weatherData.push(data);
-  //       });
-
-  //       const averageHumidity = calculateAverage(weatherData, "humidity");
-  //       const averageTemperature = calculateAverage(weatherData, "temperature");
-  //       const averageRainfall = calculateAverage(weatherData, "precipitation");
-
-  //       // Send data for malaria prediction
-  //       sendToMalariaPrediction(averageHumidity, averageTemperature, averageRainfall);
-
-  //       console.log("Data sent for prediction:", {
-  //         averageHumidity,
-  //         averageTemperature,
-  //         averageRainfall,
-  //       });
-  //     } catch (error) {
-  //       console.error("Error retrieving weather data:", error);
-  //     }
-  //   };
-
-  //   const calculateAverage = (data, property) => {
-  //     const sum = data.reduce((accumulator, item) => {
-  //       return accumulator + item[property];
-  //     }, 0);
-
-  //     const average = sum / data.length;
-  //     return average;
-  //   };
-
-  //   const sendToMalariaPrediction = (humidity, temperature, rainfall) => {
-  //     // Code to send the data to the other website for malaria prediction
-  //     // Replace the URL below with the actual endpoint of the website
-  //     const predictionEndpoint = "http://192.168.0.14:5000/predict";
-
-  //     // Make an HTTP request to the prediction endpoint with the data
-  //     // You can use libraries like axios or fetch to send the request
-  //     // Example using fetch:
-  //     fetch(predictionEndpoint, {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         year: 2016,
-  //         relative_humidity: humidity,
-  //         temperature: temperature,
-  //         precipitation: rainfall,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //       .then((response) => {
-  //         if (response.ok) {
-  //           console.log("Prediction request successful");
-  //         } else {
-  //           console.error("Prediction request failed:", response.status);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error sending prediction request:", error);
-  //       });
-  //   };
-
   const location = useLocation();
   const { countyName } = location.state;
-  const { county } = useParams();
-  const [notification, setNotification] = useState("endemic");
+
+  const [notification] = useState("endemic");
 
   // Filter the malaria data for the selected county
   const countyData = malariaCasesPerYear[countyName];
@@ -171,14 +99,6 @@ export const County = () => {
           </div>
         </div>
       </div>
-
-      {/* <div className="footer">
-        <div className="contact"></div>
-        <div className="news"></div>
-        <div className="weather_forecast"></div>
-      </div> */}
-
-      {/* <Footer /> */}
     </div>
   );
 };
