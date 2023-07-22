@@ -39,7 +39,7 @@ export const County = () => {
       <div className="inner-container flex flex-col flex-grow items-center m-5 gap-5 md:flex-row">
         <div className="w-full md:w-3/4">
           <div className="flex items-center mb-5 justify-between">
-            <h1 className="text-3xl font-bold text-teal-800">Malaria Alert System</h1>
+            <h1 className="text-3xl font-bold text-teal-800 dark:text-teal-400">Malaria Alert System</h1>
             <div className="predictive_model__btn">
               <button onClick={() => predictMalariaIncidence(countyName)} disabled={loading} className="btn md:w-36 capitalize lg:w-64 text-white bg-teal-700 hover:text-teal-700 rounded-full">
                 {loading ? <span className="loading loading-infinity loading-lg"></span> : "Run Predictive model"}
@@ -58,7 +58,7 @@ export const County = () => {
           {/* map */}
           <div className="heat_map">
             <div className="card w-full bg-base-100 shadow-xl">
-              <div className="card-body p-2 h-[540px] map">
+              <div className="card-body p-2 h-[300px] md:h-[540px] map">
                 <HeatMap />
               </div>
             </div>
