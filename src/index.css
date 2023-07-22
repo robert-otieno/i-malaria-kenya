@@ -2,11 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    font-size: 13px;
-}
+@layer base {
 
-.map .leaflet-container {
-    height: 100%;
-    border-radius: 12px;
+    /* Avoid setting global styles directly on '*' selector, 
+   unless necessary, as it might cause unintended side effects */
+    html {
+        box-sizing: border-box;
+    }
+
+    *,
+    *::before,
+    *::after {
+        /* Apply box-sizing to all elements and pseudo-elements */
+        box-sizing: inherit;
+    }
+
+    body {
+        /* It's better to define font-size at the root element (html) to set a consistent base size for the entire document */
+        font-size: 16px;
+        /* Adjust the value as per your requirement */
+    }
+
+    /* Assuming ".leaflet-container" is the actual Leaflet map container */
+    .map .leaflet-container {
+        /* Consider using 'overflow: hidden;' to prevent map overflow issues */
+        overflow: hidden;
+        height: 100%;
+        border-radius: 12px;
+    }
+
 }

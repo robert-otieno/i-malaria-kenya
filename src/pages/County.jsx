@@ -36,8 +36,8 @@ export const County = () => {
       <div className="bg-teal-800 p-3 space-y-2 top-0">
         <Header nav={"/ken"} title={`${countyName} County`} />
       </div>
-      <div className="inner-container flex flex-grow p-5">
-        <div className="flex-grow pr-4">
+      <div className="inner-container flex flex-col flex-grow items-center m-5 gap-5 md:flex-row">
+        <div className="w-full md:w-3/4">
           <div className="flex items-center mb-5 justify-between">
             <h1 className="text-3xl font-bold text-teal-800">Malaria Alert System</h1>
             <div className="predictive_model__btn">
@@ -65,7 +65,7 @@ export const County = () => {
           </div>
         </div>
 
-        <div className="inner-container__right flex-1">
+        <div className="w-full md:w-1/4">
           <div className="card w-full bg-base-100 shadow-xl">
             <div className="card-body p-4">
               <h3 className="card-title capitalize">total malaria cases per year over the last 5 years for {`${countyName} County`}</h3>
