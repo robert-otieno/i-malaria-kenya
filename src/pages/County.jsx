@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { AiOutlineAlert, AiOutlineSafety } from "react-icons/ai";
-import { TbAlertTriangle } from "react-icons/tb";
+// import { AiOutlineAlert, AiOutlineSafety } from "react-icons/ai";
+// import { TbAlertTriangle } from "react-icons/tb";
 
 import { Header, HeatMap, LineChart } from "../components";
 
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
+// import { predictMalariaIncidence } from "../utilities/predict_malaria_incidence";
+import { useStateContext } from "../contexts/ContextProvider";
 
 export const County = () => {
+  const { predictMalariaIncidence, alertLevel, loading } = useStateContext();
   const location = useLocation();
   const { countyName } = location.state;
 
-  const [notification] = useState("endemic");
-
   // Filter the malaria data for the selected county
   const countyData = malariaCasesPerYear[countyName];
-
-  console.log(countyName);
 
   // Check if the county data exists
   if (!countyData) {
@@ -42,25 +41,16 @@ export const County = () => {
           <div className="flex items-center mb-5 justify-between">
             <h1 className="text-3xl font-bold text-teal-800">Malaria Alert System</h1>
             <div className="predictive_model__btn">
-              <button className="btn md:w-36 lg:w-64 text-white bg-teal-700 hover:text-teal-700 rounded-full">Run Predictive model</button>
+              <button onClick={() => predictMalariaIncidence(countyName)} disabled={loading} className="btn md:w-36 capitalize lg:w-64 text-white bg-teal-700 hover:text-teal-700 rounded-full">
+                {loading ? <span className="loading loading-infinity loading-lg"></span> : "Run Predictive model"}
+              </button>
             </div>
           </div>
 
           <div className="notification mb-5">
-            {notification === "normal" ? (
-              <div className="alert alert-success">
-                <AiOutlineSafety size={24} />
-                <span className="capitalize">Low risk area!</span>
-              </div>
-            ) : notification === "alert" ? (
-              <div className="alert alert-warning">
-                <AiOutlineAlert size={24} />
-                <span className="capitalize">Alert: Investigation Needed!</span>
-              </div>
-            ) : (
-              <div className="alert alert-error">
-                <TbAlertTriangle size={24} />
-                <span className="capitalize">Action Required! Endemic Region.</span>
+            {alertLevel && (
+              <div className={`alert ${alertLevel.style}`}>
+                <span className="capitalize">{alertLevel.msg}</span>
               </div>
             )}
           </div>

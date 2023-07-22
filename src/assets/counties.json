@@ -10,7 +10,12 @@
             "Eldama ravine",
             "Mogotio",
             "Tiaty"
-        ]
+        ],
+        "population": {
+            "total": 666763,
+            "male": 336322,
+            "female": 330428
+        }
     },
     {
         "name": "Bomet",
@@ -22,7 +27,12 @@
             "Chepalungu",
             "Konoin",
             "Sotik"
-        ]
+        ],
+        "population": {
+            "total": 875689,
+            "male": 434287,
+            "female": 441379
+        }
     },
     {
         "name": "Bungoma",
@@ -38,7 +48,12 @@
             "Tongaren",
             "Webuye east",
             "Webuye west"
-        ]
+        ],
+        "population": {
+            "total": 1670570,
+            "male": 812146,
+            "female": 858389
+        }
     },
     {
         "name": "Busia",
@@ -51,7 +66,12 @@
             "Nambele",
             "Teso North",
             "Teso South"
-        ]
+        ],
+        "population": {
+            "total": 893681,
+            "male": 426252,
+            "female": 467401
+        }
     },
     {
         "name": "Elgeyo-Marakwet",
@@ -62,7 +82,12 @@
             "Keiyo south",
             "Marakwet east",
             "Marakwet west"
-        ]
+        ],
+        "population": {
+            "total": 454480,
+            "male": 227317,
+            "female": 227151
+        }
     },
     {
         "name": "Embu",
@@ -73,7 +98,12 @@
             "Mbeere north",
             "Mbeere south",
             "Runyenjes"
-        ]
+        ],
+        "population": {
+            "total": 608599,
+            "male": 304208,
+            "female": 304367
+        }
     },
     {
         "name": "Garissa",
@@ -86,7 +116,12 @@
             "Hulugho",
             "Ijara",
             "Lagdera balambala"
-        ]
+        ],
+        "population": {
+            "total": 841353,
+            "male": 458975,
+            "female": 382344
+        }
     },
     {
         "name": "Homa Bay",
@@ -101,7 +136,12 @@
             "Ndhiwa",
             "Rangwe",
             "Suba"
-        ]
+        ],
+        "population": {
+            "total": 1131950,
+            "male": 539560,
+            "female": 592367
+        }
     },
     {
         "name": "Isiolo",
@@ -114,7 +154,12 @@
             "Merit",
             "Oldonyiro",
             "Sericho"
-        ]
+        ],
+        "population": {
+            "total": 268002,
+            "male": 139510,
+            "female": 128483
+        }
     },
     {
         "name": "Kajiado",
@@ -125,7 +170,12 @@
             "Kajiado North.",
             "Loitokitok.",
             "Mashuuru."
-        ]
+        ],
+        "population": {
+            "total": 1117840,
+            "male": 557098,
+            "female": 560704
+        }
     },
     {
         "name": "Kakamega",
@@ -145,7 +195,12 @@
             "Mumias",
             "Mutungu",
             "Navakholo"
-        ]
+        ],
+        "population": {
+            "total": 1867579,
+            "male": 897133,
+            "female": 970406
+        }
     },
     {
         "name": "Kericho",
@@ -158,7 +213,12 @@
             "Kipkelion east",
             "Kipkelion west",
             "Soin sigowet"
-        ]
+        ],
+        "population": {
+            "total": 901777,
+            "male": 450741,
+            "female": 451008
+        }
     },
     {
         "name": "Kiambu",
@@ -177,7 +237,12 @@
             "Ruiru",
             "Thika town",
             "lari"
-        ]
+        ],
+        "population": {
+            "total": 2417735,
+            "male": 1187146,
+            "female": 1230454
+        }
     },
     {
         "name": "Kilifi",
@@ -191,7 +256,12 @@
             "Magarini",
             "Malindi",
             "Rabai"
-        ]
+        ],
+        "population": {
+            "total": 1453787,
+            "male": 704089,
+            "female": 749673
+        }
     },
     {
         "name": "Kirinyaga",
@@ -203,13 +273,23 @@
             "Kirinyaga west",
             "Mwea east",
             "Mwea west"
-        ]
+        ],
+        "population": {
+            "total": 610411,
+            "male": 302011,
+            "female": 308369
+        }
     },
     {
         "name": "Kisii",
         "capital": "Kisii",
         "code": 45,
-        "sub_counties": []
+        "sub_counties": [],
+        "population": {
+            "total": 1266860,
+            "male": 605784,
+            "female": 661038
+        }
     },
     {
         "name": "Kisumu",
@@ -223,7 +303,12 @@
             "Nyakach",
             "Nyando",
             "Seme"
-        ]
+        ],
+        "population": {
+            "total": 1155474,
+            "male": 560942,
+            "female": 594609
+        }
     },
     {
         "name": "Kitui",
@@ -245,7 +330,12 @@
             "Mwingi east",
             "Nzambani",
             "Tseikuru"
-        ]
+        ],
+        "population": {
+            "total": 1136187,
+            "male": 549003,
+            "female": 587151
+        }
     },
     {
         "name": "Kwale",
@@ -256,7 +346,12 @@
             "Lungalunga",
             "Msambweni",
             "Mutuga"
-        ]
+        ],
+        "population": {
+            "total": 866820,
+            "male": 425121,
+            "female": 441681
+        }
     },
     {
         "name": "Laikipia",
@@ -268,7 +363,12 @@
             "Laikipia north",
             "Laikipia west ",
             "Nyahururu"
-        ]
+        ],
+        "population": {
+            "total": 518560,
+            "male": 259440,
+            "female": 259102
+        }
     },
     {
         "name": "Lamu",
@@ -277,7 +377,12 @@
         "sub_counties": [
             "Lamu East",
             "Lamu West"
-        ]
+        ],
+        "population": {
+            "total": 143920,
+            "male": 76103,
+            "female": 67813
+        }
     },
     {
         "name": "Machakos",
@@ -291,7 +396,12 @@
             "Mavoko",
             "Mwala",
             "Yatta"
-        ]
+        ],
+        "population": {
+            "total": 1421932,
+            "male": 710707,
+            "female": 711191
+        }
     },
     {
         "name": "Makueni",
@@ -304,7 +414,12 @@
             "Kilome",
             "Makueni",
             "Mbooni"
-        ]
+        ],
+        "population": {
+            "total": 987653,
+            "male": 489691,
+            "female": 497942
+        }
     },
     {
         "name": "Mandera",
@@ -317,7 +432,12 @@
             "Mandera North",
             "Mandera South",
             "Mandera West"
-        ]
+        ],
+        "population": {
+            "total": 867457,
+            "male": 434976,
+            "female": 432444
+        }
     },
     {
         "name": "Marsabit",
@@ -328,7 +448,12 @@
             "Moyale",
             "North hor",
             "Saku"
-        ]
+        ],
+        "population": {
+            "total": 459785,
+            "male": 253548,
+            "female": 216219
+        }
     },
     {
         "name": "Meru",
@@ -344,7 +469,12 @@
             "Imenti south",
             "Tigania east",
             "Tigania west"
-        ]
+        ],
+        "population": {
+            "total": 1545714,
+            "male": 767698,
+            "female": 777975
+        }
     },
     {
         "name": "Migori",
@@ -360,7 +490,12 @@
             "Suna east",
             "Suna west",
             "Uriri"
-        ]
+        ],
+        "population": {
+            "total": 1116436,
+            "male": 536187,
+            "female": 580214
+        }
     },
     {
         "name": "Mombasa",
@@ -373,7 +508,12 @@
             "Likoni",
             "Mvita",
             "Nyali"
-        ]
+        ],
+        "population": {
+            "total": 1208333,
+            "men": 610257,
+            "women": 598046
+        }
     },
     {
         "name": "Murang'a",
@@ -388,7 +528,12 @@
             "Kiharu",
             "Mathioya",
             "Murang’a south"
-        ]
+        ],
+        "population": {
+            "total": 1056640,
+            "male": 523940,
+            "female": 532669
+        }
     },
     {
         "name": "Nairobi",
@@ -412,7 +557,12 @@
             "Ruaraka Sub County ",
             "Starehe Sub County ",
             "Westlands Sub County "
-        ]
+        ],
+        "population": {
+            "total": 4397073,
+            "male": 2192452,
+            "female": 2204376
+        }
     },
     {
         "name": "Nakuru",
@@ -430,7 +580,12 @@
             "Njoro",
             "Rongai",
             "Subukia"
-        ]
+        ],
+        "population": {
+            "total": 2162202,
+            "male": 1077272,
+            "female": 1084235
+        }
     },
     {
         "name": "Nandi",
@@ -443,7 +598,12 @@
             "Mosop",
             "Namdi hills",
             "Tindiret"
-        ]
+        ],
+        "population": {
+            "total": 885711,
+            "male": 441259,
+            "female": 444430
+        }
     },
     {
         "name": "Narok",
@@ -456,7 +616,12 @@
             "Narok west",
             "Transmara east",
             "Transmara west"
-        ]
+        ],
+        "population": {
+            "total": 1157873,
+            "male": 579042,
+            "female": 578805
+        }
     },
     {
         "name": "Nyamira",
@@ -468,7 +633,12 @@
             "Masaba north",
             "Nyamira north",
             "Nyamira south"
-        ]
+        ],
+        "population": {
+            "total": 605576,
+            "male": 290907,
+            "female": 314656
+        }
     },
     {
         "name": "Nyandarua",
@@ -480,7 +650,12 @@
             "Ndaragwa",
             "Ol Kalou",
             "Ol joro orok"
-        ]
+        ],
+        "population": {
+            "total": 638289,
+            "male": 315022,
+            "female": 323247
+        }
     },
     {
         "name": "Nyeri",
@@ -495,7 +670,12 @@
             "Nyeri town",
             "Othaya",
             "Tetu"
-        ]
+        ],
+        "population": {
+            "total": 759164,
+            "male": 374288,
+            "female": 384845
+        }
     },
     {
         "name": "Samburu",
@@ -505,7 +685,12 @@
             "Samburu east",
             "Samburu north",
             "Samburu west"
-        ]
+        ],
+        "population": {
+            "total": 310327,
+            "male": 156774,
+            "female": 153546
+        }
     },
     {
         "name": "Siaya",
@@ -518,7 +703,12 @@
             "Rarieda",
             "Ugenya",
             "Unguja"
-        ]
+        ],
+        "population": {
+            "total": 993183,
+            "male": 471669,
+            "female": 521496
+        }
     },
     {
         "name": "Taita-Taveta",
@@ -529,7 +719,12 @@
             "Taveta",
             "Voi",
             "Wundanyi"
-        ]
+        ],
+        "population": {
+            "total": 340671,
+            "male": 173337,
+            "female": 167327
+        }
     },
     {
         "name": "Tana River",
@@ -539,7 +734,12 @@
             "Bura",
             "Galole",
             "Garsen"
-        ]
+        ],
+        "population": {
+            "total": 315943,
+            "male": 158550,
+            "female": 157391
+        }
     },
     {
         "name": "Tharaka-Nithi",
@@ -552,7 +752,12 @@
             "Muthambi",
             "Tharak north",
             "Tharaka south"
-        ]
+        ],
+        "population": {
+            "total": 393177,
+            "male": 193764,
+            "female": 199406
+        }
     },
     {
         "name": "Trans-Nzoia",
@@ -564,7 +769,12 @@
             "Kiminini",
             "Kwanza",
             "Saboti"
-        ]
+        ],
+        "population": {
+            "total": 990341,
+            "male": 489107,
+            "female": 501206
+        }
     },
     {
         "name": "Turkana",
@@ -576,7 +786,12 @@
             "Turkana east",
             "Turkana north",
             "Turkana south"
-        ]
+        ],
+        "population": {
+            "total": 926976,
+            "male": 478087,
+            "female": 448868
+        }
     },
     {
         "name": "Uasin Gishu",
@@ -589,7 +804,12 @@
             "Moiben",
             "Soy",
             "Turbo"
-        ]
+        ],
+        "population": {
+            "total": 1163186,
+            "male": 580269,
+            "female": 582889
+        }
     },
     {
         "name": "Vihiga",
@@ -601,7 +821,12 @@
             "Luanda",
             "Sabatia",
             "vihiga"
-        ]
+        ],
+        "population": {
+            "total": 590013,
+            "male": 283678,
+            "female": 306323
+        }
     },
     {
         "name": "Wajir",
@@ -614,7 +839,12 @@
             "Wajir North",
             "Wajir South",
             "Wajir West"
-        ]
+        ],
+        "population": {
+            "total": 781263,
+            "male": 415374,
+            "female": 365840
+        }
     },
     {
         "name": "West Pokot",
@@ -625,6 +855,11 @@
             "North Pokot",
             "Pokot South",
             "West Pokot"
-        ]
+        ],
+        "population": {
+            "total": 621241,
+            "male": 307013,
+            "female": 314213
+        }
     }
 ]
