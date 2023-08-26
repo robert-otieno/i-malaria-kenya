@@ -19,7 +19,7 @@ export const ContextProvider = ({ children }) => {
     },
   ]);
   const [predictions, setPredictions] = useState([]);
-  const MODEL_URL = "http://localhost:3000/tfdf_model/model.json";
+  const MODEL_URL = "https://i-malaria-kenya.vercel.app//tfdf_model/model.json";
 
   /**
    * When there is a malaria outbreak, a certain number of cases in a specific location within a certain timeframe must be surpassed,
