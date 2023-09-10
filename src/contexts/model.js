@@ -19,7 +19,8 @@ export const ContextProvider = ({ children }) => {
     },
   ]);
   const [predictions, setPredictions] = useState([]);
-  const MODEL_URL = "https://i-malaria-kenya.vercel.app//tfdf_model/model.json";
+  const MODEL_URL = "https:/i-malaria-kenya.vercel.app/tfdf_model/model.json";
+  // const MODEL_URL = "http:/localhost:3000/tfdf_model/model.json";
 
   /**
    * When there is a malaria outbreak, a certain number of cases in a specific location within a certain timeframe must be surpassed,
@@ -64,7 +65,7 @@ export const ContextProvider = ({ children }) => {
       const newFeatures = newData.map((data) => [data.year, data.precipitation, data.relative_humidity, data.temperature]);
 
       // Prepare your input data as a Tensor
-      const newFeaturesTensor = tf.tensor2d(newFeatures, [newFeatures.length, 4]);
+      const newFeaturesTensor = window.tf.tensor2d(newFeatures, [newFeatures.length, 4]);
 
       // Make predictions
       // const result = model.predict(newFeaturesTensor);
@@ -74,7 +75,7 @@ export const ContextProvider = ({ children }) => {
       // setPredictions(result);
 
       // Clean up
-      tf.dispose(newFeaturesTensor);
+      window.tf.dispose(newFeaturesTensor);
     };
 
     // Make predictions when newData or model changes
