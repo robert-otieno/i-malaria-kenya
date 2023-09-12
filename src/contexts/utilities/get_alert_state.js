@@ -1,5 +1,5 @@
-import malariaCases from "../assets/structured_malaria_data.json";
-import countiesData from "../assets/counties.json";
+import malariaCases from "../../assets/structured_malaria_data.json";
+import countiesData from "../../assets/counties.json";
 // import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
 
 // Step 1: Data Collection
@@ -129,15 +129,15 @@ export const getAlertState = (malariaIncidence, location) => {
     case "safe":
       // Render notification for "safe" state
       return { msg: "Safe: No action required.", style: "alert-success" };
-      break;
+
     case "alert":
       // Render notification for "alert" state
       return { msg: "Alert: Monitor the situation closely.", style: "alert-warning" };
-      break;
+
     case "endemic":
       // Render notification for "endemic" state
       return { msg: "Endemic: Take necessary actions to control the outbreak.", style: "alert-error" };
-      break;
+
     default:
       return null;
   }

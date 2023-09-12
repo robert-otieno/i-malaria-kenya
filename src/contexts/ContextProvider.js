@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getCountriesData } from "../utilities/functions";
+import { getCountriesData } from "./utilities/functions";
 
-import { fetchWeatherData } from "../utilities/read_weather_data_from_firebase";
-import { predictiveModelInference } from "../utilities/predictive_model_inference";
-import { getAlertState } from "../utilities/get_alert_state";
+import { fetchWeatherData } from "./utilities/read_weather_data_from_firebase";
+import { predictiveModelInference } from "./utilities/predictive_model_inference";
+import { getAlertState } from "./utilities/get_alert_state";
 
 const StateContext = createContext();
 

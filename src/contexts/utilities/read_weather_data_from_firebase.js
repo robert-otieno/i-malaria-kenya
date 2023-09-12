@@ -1,6 +1,6 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { DateTime } from "luxon";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 
 export const fetchWeatherData = async () => {
   const now = DateTime.now();
@@ -10,8 +10,6 @@ export const fetchWeatherData = async () => {
 
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    // console.log(doc.id, " => ", doc.data());
     weatherData.push(doc.data());
   });
 

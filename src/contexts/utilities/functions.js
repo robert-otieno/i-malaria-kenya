@@ -1,7 +1,7 @@
-import malariaData from "../assets/structured_malaria_data.json";
+import malariaData from "../../assets/structured_malaria_data.json";
 import axios from "axios";
 import { DateTime } from "luxon";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 
 // GET Countries data
@@ -67,6 +67,9 @@ const scheduleWeatherData = async () => {
     }
   }, timeToNextMidnight);
 };
+
+// Initialize daily fetching of weather data - 9/10/2023
+scheduleWeatherData();
 
 const total_malaria_cases_per_year = () => {
   // Create a table to store the results
