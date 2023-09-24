@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
-
-// import { AiOutlineAlert, AiOutlineSafety } from "react-icons/ai";
-// import { TbAlertTriangle } from "react-icons/tb";
 
 import { Header, HeatMap, LineChart } from "../components";
 
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
-// import { predictMalariaIncidence } from "../utilities/predict_malaria_incidence";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export const County = () => {

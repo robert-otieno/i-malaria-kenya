@@ -128,7 +128,7 @@ export const getAlertState = (malariaIncidence, location) => {
   switch (alertLevel) {
     case "safe":
       // Render notification for "safe" state
-      return { msg: "Safe: No action required.", style: "alert-success" };
+      return { msg: "No likelyhood of an outbreak", style: "alert-success" };
 
     case "alert":
       // Render notification for "alert" state
