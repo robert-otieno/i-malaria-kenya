@@ -1,30 +1,28 @@
 import React from "react";
 import { NavLink, useParams } from "react-router-dom";
-import { Header } from "../components";
-
-import { useStateContext } from "../contexts/ContextProvider";
-
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { RiArrowRightSFill } from "react-icons/ri";
 
+import { Header } from "../components";
+import { useStateContext } from "../contexts/ContextProvider";
 import counties from "../assets/counties.json";
 
 const Country = () => {
   const { countryId } = useParams();
-  const { countriesData } = useStateContext();
+  const { countries } = useStateContext();
 
-  const countryDetails = (countriesData, countryId) => {
-    return countriesData?.find((country) => {
-      return country.cca3.toLowerCase() === countryId;
+  const countryDetails = (countries, countryId) => {
+    return countries?.find((country) => {
+      return country.code.toLowerCase() === countryId;
     });
   };
 
-  const country = countryDetails(countriesData, countryId);
+  const country = countryDetails(countries, countryId);
 
   return (
     <>
       <div className="bg-teal-800 p-3 space-y-2 sticky top-0">
-        <Header nav={"/"} title={`${country.name.common}n Counties`} />
+        <Header nav={"/"} title={`${country.name} - Counties`} />
       </div>
       <div className="h-screen overflow-auto scrollbar-hide">
         {countryId === "ken" ? (

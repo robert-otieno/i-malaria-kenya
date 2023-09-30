@@ -1,45 +1,23 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { IoSearch } from "react-icons/io5";
-import { RiArrowRightSFill } from "react-icons/ri";
-import countriesData from "../assets/countriesData.json";
 
-// import { useStateContext } from "../contexts/ContextProvider";
+// icons
+import { RiArrowRightSFill } from "react-icons/ri";
+import { IoSearch } from "react-icons/io5";
+
+// local assets
+import { useStateContext } from "../contexts/ContextProvider";
 import { Header } from "../components";
 
 const Home = () => {
-  // const { countriesData } = useStateContext();
+  const { countries } = useStateContext();
   const [q, setQ] = useState("");
 
-  // const search = (countries) => {
-  //   return countries?.filter((country) => {
-  //     return country.name.toLowerCase().includes(q.toLowerCase());
-  //   });
-  // };
-
-  // Extract country name and country code from countriesData
-  const countries = countriesData.map((country) => {
-    const countryData = {};
-
-    countryData.name = country.name.common;
-    countryData.code = country.cca3;
-
-    return countryData;
-  });
-
-  // Sort Countries by name
-  countries.sort((a, b) => {
-    const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-    const nameB = b.name.toUpperCase(); // ignore upper and lowercase
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    // names must be equal
-    return 0;
-  });
+  const search = (countries) => {
+    return countries?.filter((country) => {
+      return country.name.toLowerCase().includes(q.toLowerCase());
+    });
+  };
 
   return (
     <>
@@ -56,14 +34,14 @@ const Home = () => {
             placeholder="Filter countries..."
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            disabled
+            // disabled
           />
         </div>
       </div>
 
       <div className="">
         <div className="w-full text-sm font-semibold text-gray-900 bg-white dark:bg-gray-700 dark:text-white">
-          {countries.map((country) => (
+          {search(countries).map((country) => (
             <NavLink
               to={`/${country.code.toLowerCase()}`}
               key={country.code}

@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
+// local assets
 import { Header, HeatMap, LineChart } from "../components";
-
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export const County = () => {
-  const { predictMalariaIncidence, alertLevel, loading } = useStateContext();
+  const { predictMalariaIncidence, alertLevel, loading, fetchWeatherData } = useStateContext();
   const location = useLocation();
   const { countyName } = location.state;
+  // const [data] = useState(predictMalariaIncidence);
+  const [weatherData, setWeatherData] = useState();
+
+  // useEffect(() => {
+  //   const fetchAndSaveWeatherData = async () => {
+  //     const weatherData = await fetchWeatherData(countyName);
+  //     setWeatherData(weatherData);
+  //   };
+  //   fetchAndSaveWeatherData();
+  // }, [countyName, fetchWeatherData]);
 
   // Filter the malaria data for the selected county
   const countyData = malariaCasesPerYear[countyName];
@@ -36,11 +46,11 @@ export const County = () => {
         <div className="w-full md:w-3/4">
           <div className="flex items-center mb-5 justify-between">
             <h1 className="text-3xl font-bold text-teal-800 dark:text-teal-400">Malaria Alert System</h1>
-            <div className="predictive_model__btn">
+            {/* <div className="predictive_model__btn">
               <button onClick={() => predictMalariaIncidence(countyName)} disabled={loading} className="btn md:w-36 capitalize lg:w-64 text-white bg-teal-700 hover:text-teal-700 rounded-full">
                 {loading ? <span className="loading loading-infinity loading-lg"></span> : "Run Predictive model"}
               </button>
-            </div>
+            </div> */}
           </div>
 
           <div className="notification mb-5">
@@ -55,6 +65,11 @@ export const County = () => {
           <div className="heat_map">
             <div className="card w-full bg-base-100 shadow-xl">
               <div className="card-body p-2 h-[300px] md:h-[540px] map">
+                {/* <ul>
+                  <li>humidity: {weatherData[1]}</li>
+                  <li>temperature: {weatherData[2]}</li>
+                  <li>precipitation: {weatherData[3]}</li>
+                </ul> */}
                 <HeatMap />
               </div>
             </div>
