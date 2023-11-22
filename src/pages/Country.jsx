@@ -3,7 +3,7 @@ import { NavLink, Outlet, useParams } from "react-router-dom";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { RiArrowRightSFill } from "react-icons/ri";
 
-import { Header } from "../components";
+import { Header, HeatMap } from "../components";
 import { useStateContext } from "../contexts/ContextProvider";
 import counties from "../assets/counties.json";
 
@@ -21,12 +21,12 @@ const Country = () => {
 
   return (
     <>
-      <div className="bg-teal-800 p-3 space-y-2 sticky top-0">
+      {/* <div className="bg-teal-800 p-3 space-y-2 sticky top-0">
         <Header nav={"/"} title={country.name} />
-      </div>
+      </div> */}
 
       <div className="flex flex-row">
-        <div className="flex-1">
+        {/* <div className=" w-1/6">
           <div className="h-screen overflow-auto scrollbar-hide">
             {countryId === "ken" ? (
               <div className="w-full text-sm font-semibold text-gray-900 bg-white dark:bg-gray-700 dark:text-white">
@@ -56,9 +56,17 @@ const Country = () => {
               </div>
             )}
           </div>
+        </div> */}
+
+        <div className="heat_map w-1/2">
+          <div className="h-screen">
+            <div className="map h-full">
+              <HeatMap />
+            </div>
+          </div>
         </div>
 
-        <section className="flex flex-[3] h-full">
+        <section className="flex w-1/2 h-full">
           <Outlet />
         </section>
       </div>
