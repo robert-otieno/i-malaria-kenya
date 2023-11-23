@@ -77,23 +77,17 @@ export const County = () => {
         <div className="flex flex-wrap gap-3 px-1">
           <div className="stats shadow w-full">
             <div className="stat place-items-center">
-              <div className="stat-title flex flex-row items-center gap-1">
-                Precipitation <TbCloudRain />
-              </div>
+              <div className="stat-title text-sm md:text-base flex flex-row items-center gap-1">Precipitation</div>
               <div className="stat-value text-2xl font-semibold text-neutral-800 dark:text-neutral-50">{weatherData[2]}</div>
             </div>
 
             <div className="stat place-items-center">
-              <div className="stat-title flex flex-row items-center gap-1">
-                Humidity <WiHumidity size={20} />
-              </div>
+              <div className="stat-title text-sm md:text-base flex flex-row items-center gap-1">Humidity</div>
               <div className="stat-value text-2xl font-semibold text-neutral-800 dark:text-neutral-50">{weatherData[1]}</div>
             </div>
 
             <div className="stat place-items-center">
-              <div className="stat-title flex flex-row items-center gap-1">
-                Temperature <TbTemperatureCelsius />
-              </div>
+              <div className="stat-title text-sm md:text-base flex flex-row items-center gap-1">Temperature</div>
               <div className="stat-value text-2xl font-semibold text-neutral-800 dark:text-neutral-50">{weatherData[0]}</div>
             </div>
           </div>
@@ -151,11 +145,11 @@ export const County = () => {
 const StatsCard = ({ feature, value, iconStyle, IconComponent }) => (
   <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 p-4 w-full">
     <div className="flex flex-wrap outline-none">
-      <div className="w-2/5 md:w-1/3 pr-4 pl-4">{IconComponent && <IconComponent className={iconStyle} size={50} />}</div>
-      <div className="w-3/5 md:w-2/3 pr-4 pl-4 text-right">
-        <h5 className="mb-2 text-lg font-medium leading-tight text-neutral-600 dark:text-neutral-200 capitalize">{feature}</h5>
-        <p className="text-2xl font-semibold text-neutral-800 dark:text-neutral-50">{value}</p>
-        <h5 className="mb-2 text-sm font-medium leading-tight text-[#9a9a9a] dark:text-neutral-200 capitalize">Malaria cases (per 100,000 people)</h5>
+      <div className="md:w-2/5 w-1/4 pr-4 pl-4">{IconComponent && <IconComponent className={iconStyle} size={36} />}</div>
+      <div className="md:w-3/5 w-3/4 pr-4 pl-4 text-right">
+        <h5 className="mb-2 text-sm md:text-lg font-medium leading-tight text-neutral-600 dark:text-neutral-200 capitalize">{feature}</h5>
+        <p className="text-base md:text-2xl font-semibold text-neutral-800 dark:text-neutral-50">{value}</p>
+        <h5 className="mb-2 text-[13px] md:text-sm font-medium leading-tight text-[#9a9a9a] dark:text-neutral-200 capitalize">Malaria cases (per 100,000 people)</h5>
       </div>
     </div>
   </div>

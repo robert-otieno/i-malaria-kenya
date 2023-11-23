@@ -30,8 +30,8 @@ const Country = () => {
   const formattedDate = today.toLocaleDateString("en-US", options);
 
   return (
-    <div className="flex flex-row overflow-hidden">
-      <div className="heat_map w-2/3">
+    <div className="flex flex-col md:flex-row overflow-hidden">
+      <div className="heat_map w-full md:w-2/3">
         <div className="h-screen">
           {countryId === "ken" ? (
             <div className="map h-full">
@@ -51,7 +51,7 @@ const Country = () => {
         </div>
       </div>
 
-      <section className="flex flex-col w-1/3 h-screen">
+      <section className="flex flex-col w-full md:w-1/3 h-screen">
         <div className="navbar bg-teal-800 text-white">
           <div className="flex-1">
             <FaMosquito size={32} />
@@ -89,12 +89,12 @@ const Country = () => {
           <div className="stats shadow w-full">
             <div className="stat">
               <div className="stat-title">Location</div>
-              <div className="stat-value text-lg capitalize">{(selectedCounty && selectedCounty.countyName) || country.name}</div>
+              <div className="stat-value text-sm md:text-lg capitalize">{(selectedCounty && selectedCounty.countyName) || country.name}</div>
             </div>
 
             <div className="stat">
               <div className="stat-title">Date</div>
-              <div className="stat-value text-lg">{formattedDate}</div>
+              <div className="stat-value  text-sm md:text-lg">{formattedDate}</div>
             </div>
           </div>
 
