@@ -51,7 +51,7 @@ const Country = () => {
         </div>
       </div>
 
-      <section className="flex flex-col w-1/3 h-full">
+      <section className="flex flex-col w-1/3 h-screen">
         <div className="navbar bg-teal-800 text-white">
           <div className="flex-1">
             <FaMosquito size={32} />
@@ -65,7 +65,7 @@ const Country = () => {
               <label tabIndex={0} className="btn btn-neutral btn-sm m-1 capitalize">
                 {selectedCounty ? selectedCounty.countyName : "Select County"}
               </label>
-              <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-sm font-semibold dark:bg-gray-700 dark:text-white">
+              <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-sm font-semibold dark:bg-gray-700 dark:text-white overflow-y-scroll">
                 {counties.map((county, i) => (
                   <NavLink
                     to={`/ken/${county.code}`}
@@ -85,11 +85,11 @@ const Country = () => {
           </div>
         </div>
 
-        <div className="flex flex-row h-full items-center justify-between p-3">
+        <div className="p-3 h-full">
           <div className="stats shadow w-full">
             <div className="stat">
               <div className="stat-title">Location</div>
-              <div className="stat-value text-lg capitalize">{selectedCounty && selectedCounty.countyName}</div>
+              <div className="stat-value text-lg capitalize">{(selectedCounty && selectedCounty.countyName) || country.name}</div>
             </div>
 
             <div className="stat">
@@ -97,9 +97,7 @@ const Country = () => {
               <div className="stat-value text-lg">{formattedDate}</div>
             </div>
           </div>
-        </div>
 
-        <div className="px-3">
           <Outlet />
         </div>
 

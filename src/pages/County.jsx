@@ -8,15 +8,18 @@ import { FaMosquito } from "react-icons/fa6";
 // local assets
 import { LineChart } from "../components";
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
-// import { useStateContext } from "../contexts/ContextProvider";
 import axios from "axios";
+import { useStateContext } from "../contexts/ContextProvider";
 
 export const County = () => {
-  // const { predictMalariaIncidence, alertLevel, loading, fetchWeatherData } = useStateContext();
+  const { predictiveModelInference, alertLevel, loading } = useStateContext();
   const location = useLocation();
   const { countyName } = location.state;
 
   const [weatherData, setWeatherData] = useState(null);
+  const [prediction, setPrediction] = useState(null);
+
+  prediction && console.log(prediction);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,9 +29,14 @@ export const County = () => {
     fetchData();
   }, [countyName]);
 
-  // const capitalize = (word) => {
-  //   return word.charAt(0).toUpperCase() + word.slice(1);
-  // };
+  useEffect(() => {
+    const fetchData = async () => {
+      const predictedIncidence = await predictiveModelInference(weatherData);
+      setPrediction(predictedIncidence);
+    };
+
+    fetchData();
+  }, [weatherData, predictiveModelInference]);
 
   const capitalize = (word) => {
     return word
@@ -63,14 +71,33 @@ export const County = () => {
   ));
 
   return (
-    <div className="flex flex-col overflow-auto w-full">
+    <div className="flex flex-col w-full pt-3">
       {/* Stats */}
       {weatherData && (
         <div className="flex flex-wrap gap-3 px-1">
-          <StatsCard feature="precipitation" value={weatherData[2]} IconComponent={TbCloudRain} iconStyle="text-success" />
-          <StatsCard feature="Humidity" value={weatherData[1]} IconComponent={WiHumidity} iconStyle="text-info" />
-          <StatsCard feature="Temperature" value={weatherData[0]} IconComponent={TbTemperatureCelsius} iconStyle="text-warning" />
-          <StatsCard feature="Malaria Incidence" value={123} IconComponent={FaMosquito} iconStyle="dark:text-primary-content" />
+          <div className="stats shadow w-full">
+            <div className="stat place-items-center">
+              <div className="stat-title flex flex-row items-center gap-1">
+                Precipitation <TbCloudRain />
+              </div>
+              <div className="stat-value text-2xl font-semibold text-neutral-800 dark:text-neutral-50">{weatherData[2]}</div>
+            </div>
+
+            <div className="stat place-items-center">
+              <div className="stat-title flex flex-row items-center gap-1">
+                Humidity <WiHumidity size={20} />
+              </div>
+              <div className="stat-value text-2xl font-semibold text-neutral-800 dark:text-neutral-50">{weatherData[1]}</div>
+            </div>
+
+            <div className="stat place-items-center">
+              <div className="stat-title flex flex-row items-center gap-1">
+                Temperature <TbTemperatureCelsius />
+              </div>
+              <div className="stat-value text-2xl font-semibold text-neutral-800 dark:text-neutral-50">{weatherData[0]}</div>
+            </div>
+          </div>
+          <StatsCard feature="Malaria Incidence" value={prediction} IconComponent={FaMosquito} iconStyle="dark:text-primary-content" />
         </div>
       )}
 
@@ -106,6 +133,17 @@ export const County = () => {
           <button>close</button>
         </form>
       </dialog>
+
+      {/* More details card */}
+      {/* <div className="card w-full bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h2 className="card-title">Card title!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div className="card-actions justify-end">
+            <button className="btn btn-primary">Buy Now</button>
+          </div>
+        </div>
+      </div> */}
     </div>
   );
 };
@@ -117,6 +155,7 @@ const StatsCard = ({ feature, value, iconStyle, IconComponent }) => (
       <div className="w-3/5 md:w-2/3 pr-4 pl-4 text-right">
         <h5 className="mb-2 text-lg font-medium leading-tight text-neutral-600 dark:text-neutral-200 capitalize">{feature}</h5>
         <p className="text-2xl font-semibold text-neutral-800 dark:text-neutral-50">{value}</p>
+        <h5 className="mb-2 text-sm font-medium leading-tight text-[#9a9a9a] dark:text-neutral-200 capitalize">Malaria cases (per 100,000 people)</h5>
       </div>
     </div>
   </div>

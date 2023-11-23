@@ -15,15 +15,15 @@ const tf = window.tf;
 const tfdf = window.tfdf;
 
 // Malaria incidence prediction
-const predictiveModelInference = async (relative_humidity, temperature, precipitation) => {
+const predictiveModelInference = async (weatherData) => {
   // Load the model
   const model = await tfdf.loadTFDFModel("http://127.0.0.1:3000/tfdf_model/model.json");
 
   // Perform an inference
   const result = await model.executeAsync({
-    precipitation: tf.tensor([precipitation]),
-    relative_humidity: tf.tensor([relative_humidity]),
-    temperature: tf.tensor([temperature]),
+    precipitation: tf.tensor([weatherData[2]]),
+    relative_humidity: tf.tensor([weatherData[1]]),
+    temperature: tf.tensor([weatherData[0]]),
   });
 
   return result.dataSync()[1];
@@ -321,7 +321,9 @@ export const ContextProvider = ({ children }) => {
   const [selectedCounty, setSelectedCounty] = useState(null);
 
   return (
-    <StateContext.Provider value={{ selectedCounty, setSelectedCounty, loading, alertLevel, countries, countryId, setCountryId, total_malaria_cases_per_year, getTotalPopulation }}>
+    <StateContext.Provider
+      value={{ selectedCounty, setSelectedCounty, loading, alertLevel, countries, countryId, setCountryId, total_malaria_cases_per_year, getTotalPopulation, predictiveModelInference }}
+    >
       {children}
     </StateContext.Provider>
   );
