@@ -6,10 +6,10 @@ import { useStateContext } from "../contexts/ContextProvider";
 
 const HeatMap = () => {
   const kenyaCenter = [-1.2921, 36.8219];
-  const kenyaZoom = 7;
+  const kenyaZoom = 6;
 
   const navigate = useNavigate();
-  const { setSelectedCounty, selectedCounty } = useStateContext();
+  const { setSelectedCounty } = useStateContext();
 
   const onEachFeature = (feature, layer) => {
     layer.on({

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useParams } from "react-router-dom";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { RiArrowRightSFill } from "react-icons/ri";
@@ -10,17 +10,19 @@ import counties from "../assets/counties.json";
 
 const Country = () => {
   const { countryId } = useParams();
-  const { countries } = useStateContext();
+  const { countries, selectedCounty, setSelectedCounty } = useStateContext();
+  const [country, setCountry] = useState(null);
 
-  const countryDetails = (countries, countryId) => {
-    return countries?.find((country) => {
-      return country.code.toLowerCase() === countryId;
-    });
-  };
+  useEffect(() => {
+    const countryDetails = (countries, countryId) => {
+      return countries?.find((country) => {
+        return country.code.toLowerCase() === countryId;
+      });
+    };
 
-  const country = countryDetails(countries, countryId);
-
-  const { selectedCounty, setSelectedCounty } = useStateContext();
+    const country = countryDetails(countries, countryId);
+    setCountry(country);
+  }, [countries, countryId]);
 
   /**
    * Today's date
@@ -56,7 +58,7 @@ const Country = () => {
           <div className="flex-1">
             <FaMosquito size={32} />
             <NavLink to="/" className="btn btn-ghost text-xl normal-case font-sans">
-              iMalaria - {country.name}
+              iMalaria - {country?.name}
             </NavLink>
           </div>
 
@@ -89,7 +91,7 @@ const Country = () => {
           <div className="stats shadow w-full">
             <div className="stat">
               <div className="stat-title">Location</div>
-              <div className="stat-value text-sm md:text-lg capitalize">{(selectedCounty && selectedCounty.countyName) || country.name}</div>
+              <div className="stat-value text-sm md:text-lg capitalize">{(selectedCounty && selectedCounty.countyName) || country?.name}</div>
             </div>
 
             <div className="stat">
