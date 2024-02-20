@@ -6,7 +6,7 @@ import { useStateContext } from "../contexts/ContextProvider";
 
 const HeatMap = () => {
   const kenyaCenter = [-1.2921, 36.8219];
-  const kenyaZoom = 6;
+  const kenyaZoom = 7;
 
   const navigate = useNavigate();
   const { setSelectedCounty } = useStateContext();
@@ -41,7 +41,7 @@ const HeatMap = () => {
 
   return (
     <MapContainer center={center} zoom={zoom} scrollWheelZoom={false}>
-      <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
       <GeoJSON data={countiesData} style={getFeatureColor} onEachFeature={onEachFeature} />
     </MapContainer>
   );

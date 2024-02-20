@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { TbTemperatureCelsius, TbCloudRain } from "react-icons/tb";
-import { WiHumidity } from "react-icons/wi";
+// import { TbTemperatureCelsius, TbCloudRain } from "react-icons/tb";
+// import { WiHumidity } from "react-icons/wi";
 import { FaMosquito } from "react-icons/fa6";
 
 // local assets
@@ -19,8 +19,7 @@ export const County = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [prediction, setPrediction] = useState(null);
 
-  prediction && console.log(prediction);
-
+  // Fetch weather data
   useEffect(() => {
     const fetchData = async () => {
       const weatherData = await fetchWeatherData(countyName);
@@ -29,14 +28,26 @@ export const County = () => {
     fetchData();
   }, [countyName]);
 
+  //  Make a prediction using the loaded model
   useEffect(() => {
     const fetchData = async () => {
-      const predictedIncidence = await predictiveModelInference(weatherData);
+      const predictedIncidence = await predictiveModelInference(weatherData, countyName);
       setPrediction(predictedIncidence);
     };
 
     fetchData();
   }, [weatherData, predictiveModelInference]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const weatherData = await fetchWeatherData(countyName);
+  //     const predictedIncidence = await predictiveModelInference(weatherData, countyName);
+  //     setWeatherData(weatherData);
+  //     setPrediction(predictedIncidence);
+  //   };
+
+  //   fetchData();
+  // }, [countyName, predictiveModelInference]);
 
   const capitalize = (word) => {
     return word
@@ -78,24 +89,24 @@ export const County = () => {
           <div className='stats shadow w-full'>
             <div className='stat place-items-center'>
               <div className='stat-title text-sm md:text-base flex flex-row items-center gap-1'>Precipitation</div>
-              <div className='stat-value text-2xl font-semibold text-neutral-800 dark:text-neutral-50'>{weatherData[2]}</div>
+              <div className='stat-value text-2xl font-semibold'>{weatherData[2]}</div>
             </div>
 
             <div className='stat place-items-center'>
               <div className='stat-title text-sm md:text-base flex flex-row items-center gap-1'>Humidity</div>
-              <div className='stat-value text-2xl font-semibold text-neutral-800 dark:text-neutral-50'>{weatherData[1]}</div>
+              <div className='stat-value text-2xl font-semibold'>{weatherData[1]}</div>
             </div>
 
             <div className='stat place-items-center'>
               <div className='stat-title text-sm md:text-base flex flex-row items-center gap-1'>Temperature</div>
-              <div className='stat-value text-2xl font-semibold text-neutral-800 dark:text-neutral-50'>{weatherData[0]}</div>
+              <div className='stat-value text-2xl font-semibold'>{weatherData[0]}</div>
             </div>
           </div>
           <StatsCard feature='Malaria Incidence' value={Number(prediction).toFixed(2)} IconComponent={FaMosquito} iconStyle='dark:text-primary-content' />
         </div>
       )}
 
-      <button className='btn btn-lg capitalize btn-neutral my-3 mx-1' onClick={() => document.getElementById("my_modal_2").showModal()}>
+      <button className='btn btn-md text-sm capitalize btn-neutral my-3 mx-1' onClick={() => document.getElementById("my_modal_2").showModal()}>
         Statistics: Malaria trends overtime
       </button>
 
@@ -149,7 +160,7 @@ const StatsCard = ({ feature, value, iconStyle, IconComponent }) => (
       <div className='md:w-3/5 w-3/4 pr-4 pl-4 text-right'>
         <h5 className='mb-2 text-sm md:text-lg font-medium leading-tight text-neutral-600 dark:text-neutral-200 capitalize'>{feature}</h5>
         <p className='text-base md:text-2xl font-semibold text-neutral-800 dark:text-neutral-50'>{value}</p>
-        <h5 className='mb-2 text-[13px] md:text-sm font-medium leading-tight text-[#9a9a9a] dark:text-neutral-200 capitalize'>Malaria cases (per 100,000 people)</h5>
+        <h5 className='mb-2 text-[13px] md:text-sm font-medium leading-tight text-[#9a9a9a] dark:text-neutral-200 capitalize'>Malaria cases (per 1000 people)</h5>
       </div>
     </div>
   </div>
