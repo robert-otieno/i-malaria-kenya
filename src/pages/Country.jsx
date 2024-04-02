@@ -34,7 +34,7 @@ const Country = () => {
 
   return (
     <div className='flex flex-col md:flex-row overflow-hidden'>
-      <div className='heat_map w-full md:w-2/3'>
+      <div className='hidden md:block heat_map w-full md:w-2/3'>
         <div className='h-screen'>
           {countryId === "ken" ? (
             <div className='map h-full'>
