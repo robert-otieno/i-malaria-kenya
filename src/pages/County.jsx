@@ -177,7 +177,7 @@ const tfdf = window.tfdf;
 // Malaria incidence prediction
 const predictiveModelInference = async (weatherData) => {
   // Load the model
-  const model = await tfdf.loadTFDFModel("http://127.0.0.1:3000/tfdf_model/model.json");
+  const model = await tfdf.loadTFDFModel("https://i-malaria-kenya.vercel.app/tfdf_model/model.json");
 
   // Perform an inference
   const result = await model.executeAsync({
