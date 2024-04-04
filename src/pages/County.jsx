@@ -6,10 +6,8 @@ import { FaMosquito } from "react-icons/fa6";
 import { LineChart } from "../components";
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
 import axios from "axios";
-// import { useStateContext } from "../contexts/ContextProvider";
 
 export const County = () => {
-  // const { predictiveModelInference, calculateMalariaThresholds } = useStateContext();
   const location = useLocation();
   const { countyName } = location.state;
   const [loading, setLoading] = useState(false);
@@ -162,8 +160,10 @@ const fetchWeatherData = async (location) => {
         "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
       },
     });
+
     const { humidity, temp_c, precip_mm } = data.current;
     const weatherData = [temp_c, humidity, precip_mm];
+
     return weatherData;
   } catch (error) {
     console.error("An error occurred while fetching weather data:", error);
@@ -174,17 +174,29 @@ const fetchWeatherData = async (location) => {
 const tf = window.tf;
 const tfdf = window.tfdf;
 
-// Malaria incidence prediction
+/**
+ * Model is loaded asynchronously. Hence, we initialize it here to be used later for malaria incidence prediction.
+ * @param {*} weatherData
+ * @returns malaria_incidence (this is the predicted malaria_incidence value)
+ */
 const predictiveModelInference = async (weatherData) => {
-  // Load the model
-  const model = await tfdf.loadTFDFModel("http://127.0.0.1:3000/tfdf_model/model.json");
+  // Load the model into memory
+  let model;
 
-  // Perform an inference
-  const result = await model.executeAsync({
+  try {
+    model = await tfdf.loadTFDFModel(`http://127.0.0.1:3000/tfdf_model/model.json`);
+  } catch (error) {
+    throw new Error("Could not load TensorFlow.js model.");
+  }
+
+  const weatherFeatures = {
     precipitation: tf.tensor([weatherData[2]]),
     relative_humidity: tf.tensor([weatherData[1]]),
     temperature: tf.tensor([weatherData[0]]),
-  });
+  };
+
+  // Perform an inference
+  const result = await model.executeAsync(weatherFeatures);
 
   return result.dataSync()[1];
 };

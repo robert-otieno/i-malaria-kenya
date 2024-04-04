@@ -2,7 +2,7 @@ import React from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import countiesData from "../assets/kenya.geojson.json";
 import { useNavigate } from "react-router-dom";
-import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from "../utils/ContextProvider";
 
 const HeatMap = () => {
   const kenyaCenter = [-1.2921, 36.8219];

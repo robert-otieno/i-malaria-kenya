@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import { RiArrowRightSFill } from "react-icons/ri";
-import { FaMosquito } from "react-icons/fa6";
+import { FaArrowRight, FaMosquito, FaPowerOff } from "react-icons/fa6";
 
 import { HeatMap } from "../components";
-import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from "../utils/ContextProvider";
 import counties from "../assets/counties.json";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { formatDate } from "../utils/utils";
 
 const Country = () => {
-  // const { countryId } = useParams();
   const { countries, selectedCounty, setSelectedCounty } = useStateContext();
   const [country, setCountry] = useState(null);
   const [countryId] = useState("ken");
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+  // Check if user is signed in
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        // User is signed out
+        navigate("/login");
+      }
+    });
+  }, [navigate]);
 
   useEffect(() => {
     const countryDetails = (countries, countryId) => {
@@ -25,14 +40,20 @@ const Country = () => {
     setCountry(country);
   }, [countries, countryId]);
 
-  /**
-   * Today's date
-   */
-  const today = new Date();
-  const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = today.toLocaleDateString("en-US", options);
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorCode + " " + errorMessage);
+      });
+  };
 
-  return (
+  return isAuthenticated ? (
     <div className='flex flex-col md:flex-row overflow-hidden'>
       <div className='hidden md:block heat_map w-full md:w-2/3'>
         <div className='h-screen'>
@@ -58,7 +79,7 @@ const Country = () => {
         <div className='navbar bg-teal-800 text-white'>
           <div className='flex-1'>
             <FaMosquito size={32} />
-            <NavLink to='/' className='btn btn-ghost text-xl normal-case font-sans dark:text-neutral-50'>
+            <NavLink to='/ken' className='btn btn-ghost text-xl normal-case font-sans dark:text-neutral-50'>
               iMalaria - {country?.name}
             </NavLink>
           </div>
@@ -79,12 +100,14 @@ const Country = () => {
                   >
                     <div className='flex items-center justify-between'>
                       <h5 className='tracking-wide'>{county.name}</h5>
-                      {/* <RiArrowRightSFill /> */}
                     </div>
                   </NavLink>
                 ))}
               </ul>
             </div>
+            <button className='hover:bg-error/80 btn btn-sm btn-circle hover:btn-outline' onClick={() => handleSignOut()}>
+              <FaPowerOff size={20} />
+            </button>
           </div>
         </div>
 
@@ -97,7 +120,7 @@ const Country = () => {
 
             <div className='stat'>
               <div className='stat-title'>Date</div>
-              <div className='stat-value  text-sm md:text-lg'>{formattedDate}</div>
+              <div className='stat-value text-sm md:text-lg'>{formatDate(new Date())}</div>
             </div>
           </div>
 
@@ -110,6 +133,18 @@ const Country = () => {
           </aside>
         </footer>
       </section>
+    </div>
+  ) : (
+    <div className='hero min-h-screen bg-base-200'>
+      <div className='hero-content text-center'>
+        <div className='max-w-md flex flex-col'>
+          <h1 className='text-5xl font-bold'>Oops!</h1>
+          <p className='py-6'>You must login to use this application. </p>
+          <NavLink to='/login' className='flex items-center gap-5 self-center rounded-lg bg-teal-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-teal-400 md:text-base'>
+            <span>Log in</span> <FaArrowRight className='w-5 md:w-6' />
+          </NavLink>
+        </div>
+      </div>
     </div>
   );
 };
