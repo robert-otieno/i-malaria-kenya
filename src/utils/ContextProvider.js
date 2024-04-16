@@ -7,54 +7,6 @@ import countiesData from "../assets/counties.json";
 
 const StateContext = createContext();
 
-// const tf = window.tf;
-// const tfdf = window.tfdf;
-
-// // Malaria incidence prediction
-// const predictiveModelInference = async (weatherData) => {
-//   // Load the model
-//   const model = await tfdf.loadTFDFModel("http://127.0.0.1:3000/tfdf_model/model.json");
-
-//   // Perform an inference
-//   const result = await model.executeAsync({
-//     precipitation: tf.tensor([weatherData[2]]),
-//     relative_humidity: tf.tensor([weatherData[1]]),
-//     temperature: tf.tensor([weatherData[0]]),
-//   });
-
-//   return result.dataSync()[1];
-// };
-
-// /**
-//  * Baseline Data
-//  * Collect historical data on malaria incidence
-//  * Get the average historical incidence of malaria cases seen in the previous 3 weeks
-//  * Normal Threshold: average historical incidence of malaria cases seen in the previous 3 weeks (baseline)
-//  * Warning Threshold: the number of malaria cases exceeds the normal threshold but has not reached the alert threshold
-//  * Alert/Epidemic Threshold: 1.5 * baseline level (indicates a critical situation)
-//  */
-
-// function calculateMalariaThresholds(historicalData, currentIncidence) {
-//   // Calculate the average historical incidence for the last 3 weeks
-//   historicalData = [12.323, 10.601, 6.653, 5.059, 8.528, 10.171, 13.362, 9.727, 7.78, 8.62, 5.446, 4.63, 6.626, 5.102, 7.312, 5.716, 6.081];
-//   const recentData = historicalData.slice(-3); // Get last 3 elements
-//   const averageIncidence = recentData.reduce((sum, value) => sum + value, 0) / recentData.length;
-
-//   // Calculate thresholds based on average
-//   const normalThreshold = averageIncidence;
-//   const warningThreshold = currentIncidence > averageIncidence && currentIncidence < 1.5 * averageIncidence;
-//   const alertThreshold = 1.5 * averageIncidence;
-
-//   // Analyze current incidence
-//   if (currentIncidence > alertThreshold) {
-//     return `Epidemic alert! Current incidence (${Number(currentIncidence).toFixed(2)}) exceeds the alert threshold (${Number(alertThreshold).toFixed(2)}).`;
-//   } else if (currentIncidence > warningThreshold) {
-//     return `Early warning! Current incidence (${Number(currentIncidence).toFixed(2)}) exceeds the normal threshold (${Number(normalThreshold).toFixed(2)}).`;
-//   } else {
-//     return `No immediate concern. Current incidence (${Number(currentIncidence).toFixed(2)}) is within acceptable limits (normal threshold: ${Number(normalThreshold).toFixed(2)}).`;
-//   }
-// }
-
 // GET Countries data
 const getCountriesData = async () => {
   try {
@@ -115,12 +67,7 @@ const getTotalPopulation = (locationName) => {
 export const ContextProvider = ({ children }) => {
   const [countriesData, setCountriesData] = useState([]);
   const [countryId, setCountryId] = useState("");
-  // const [alertLevel, setAlertLevel] = useState(null);
-  // const [loading, setLoading] = useState(false);
 
-  /**
-   * getCountriesData useEffect
-   */
   useEffect(() => {
     getCountriesData().then((data) => setCountriesData(data));
   }, []);
@@ -156,15 +103,11 @@ export const ContextProvider = ({ children }) => {
       value={{
         selectedCounty,
         setSelectedCounty,
-        // calculateMalariaThresholds,
-        // loading,
-        // alertLevel,
         countries,
         countryId,
         setCountryId,
         total_malaria_cases_per_year,
         getTotalPopulation,
-        // predictiveModelInference,
       }}
     >
       {children}

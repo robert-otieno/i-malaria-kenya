@@ -202,9 +202,11 @@ const predictiveModelInference = async (weatherData) => {
 };
 
 const historicalData = [12.323, 10.601, 6.653, 5.059, 8.528, 10.171, 13.362, 9.727, 7.78, 8.62, 5.446, 4.63, 6.626, 5.102, 7.312, 5.716, 6.081];
+
 /**
  * Baseline Data
  * Collect historical data on malaria incidence
+ *
  * Get the average historical incidence of malaria cases seen in the previous 3 weeks
  * Normal Threshold: average historical incidence of malaria cases seen in the previous 3 weeks (baseline)
  * Warning Threshold: the number of malaria cases exceeds the normal threshold but has not reached the alert threshold
