@@ -31,14 +31,14 @@ export const County = () => {
     if (hasWeatherData) {
       const fetchData = async () => {
         setLoading(true);
-        const predictedIncidence = await predictiveModelInference(weatherData);
+        const predictedIncidence = await predictiveModelInference(weatherData, countyName);
         setPrediction(predictedIncidence);
         setLoading(false);
       };
 
       fetchData();
     }
-  }, [hasWeatherData, weatherData]);
+  }, [countyName, hasWeatherData, weatherData]);
 
   // Function to stored predicted values to firebase per county
 
@@ -174,12 +174,15 @@ const fetchWeatherData = async (location) => {
 const tf = window.tf;
 const tfdf = window.tfdf;
 
+const year = new Date().getFullYear();
+const month = new Date().toLocaleString("default", { month: "long" });
+
 /**
  * Model is loaded asynchronously. Hence, we initialize it here to be used later for malaria incidence prediction.
  * @param {*} weatherData
  * @returns malaria_incidence (this is the predicted malaria_incidence value)
  */
-const predictiveModelInference = async (weatherData) => {
+const predictiveModelInference = async (weatherData, county) => {
   // Load the model into memory
   let model;
 
@@ -190,6 +193,9 @@ const predictiveModelInference = async (weatherData) => {
   }
 
   const weatherFeatures = {
+    county: tf.tensor([county]),
+    month: tf.tensor([month]),
+    year: tf.cast(tf.tensor([year]), "int32"),
     precipitation: tf.tensor([weatherData[2]]),
     relative_humidity: tf.tensor([weatherData[1]]),
     temperature: tf.tensor([weatherData[0]]),
