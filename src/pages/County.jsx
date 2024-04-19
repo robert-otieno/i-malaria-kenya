@@ -6,6 +6,7 @@ import { FaMosquito } from "react-icons/fa6";
 import { LineChart } from "../components";
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
 import axios from "axios";
+// import { historicalMalariaIncidence } from "../assets/data";
 
 export const County = () => {
   const location = useLocation();
@@ -107,7 +108,7 @@ export const County = () => {
         <div className='modal-box w-4/5 max-w-3xl'>
           <div className='flex flex-col gap-3'>
             <div className='w-full'>
-              <h3 className='card-title capitalize text-sm'>total malaria cases per year over the last 5 years for {`${countyName} County`}</h3>
+              <h3 className='card-title capitalize text-sm'>total malaria cases per year over the last 5 years for {countyName} County</h3>
               <div className='overflow-x-auto'>
                 <table className='table table-xs table-zebra'>
                   <thead>
@@ -196,7 +197,7 @@ const predictiveModelInference = async (weatherData, county) => {
     county: tf.tensor([county]),
     month: tf.tensor([month]),
     year: tf.cast(tf.tensor([year]), "int32"),
-    precipitation: tf.tensor([weatherData[2]]),
+    precipitation: tf.tensor([weatherData[2] * 25.4]),
     relative_humidity: tf.tensor([weatherData[1]]),
     temperature: tf.tensor([weatherData[0]]),
   };
@@ -206,8 +207,6 @@ const predictiveModelInference = async (weatherData, county) => {
 
   return result.dataSync()[1];
 };
-
-const historicalData = [12.323, 10.601, 6.653, 5.059, 8.528, 10.171, 13.362, 9.727, 7.78, 8.62, 5.446, 4.63, 6.626, 5.102, 7.312, 5.716, 6.081];
 
 /**
  * Baseline Data
@@ -219,18 +218,21 @@ const historicalData = [12.323, 10.601, 6.653, 5.059, 8.528, 10.171, 13.362, 9.7
  * Alert/Epidemic Threshold: 1.5 * baseline level (indicates a critical situation)
  */
 
+// Sample historical data
+const historicalMalariaData = [13.917402, 15.637864, 14.0985, 14.177317, 14.395688, 14.897078, 14.326687, 14.646455, 14.345443, 15.155089, 15.668318, 13.974785, 14.890237, 14.870568, 15.312928];
+
 function calculateMalariaThresholds(currentIncidence) {
-  // Calculate the average historical incidence for the last 3 weeks
-  const recentData = historicalData.slice(-3); // Get last 3 elements
+  // Historical data processed for the period from April 1st, 2024 to April 15th, 2024
+  const recentData = historicalMalariaData.slice(-15);
   const averageIncidence = recentData.reduce((sum, value) => sum + value, 0) / recentData.length;
 
   // Calculate thresholds based on average
   const normalThreshold = averageIncidence;
-  const warningThreshold = currentIncidence > averageIncidence || currentIncidence < 1.5 * averageIncidence ? currentIncidence : null;
+  // const warningThreshold = currentIncidence > averageIncidence || currentIncidence < 1.5 * averageIncidence ? currentIncidence : null;
   const alertThreshold = 1.5 * averageIncidence;
 
   // Analyze current incidence
-  if (currentIncidence > alertThreshold) {
+  if (currentIncidence >= alertThreshold) {
     return (
       <div role='alert' className='alert alert-error'>
         <p className='text-base text-neutral-50'>
@@ -239,21 +241,21 @@ function calculateMalariaThresholds(currentIncidence) {
         </p>
       </div>
     );
-  } else if (currentIncidence <= warningThreshold) {
+  } else if (currentIncidence <= normalThreshold) {
     return (
-      <div role='alert' className='alert alert-warning'>
-        <p className='text-base text-neutral-800 dark:text-neutral-50'>
-          <strong>Warning!</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> exceeds the normal threshold{" "}
+      <div role='alert' className='alert alert-success'>
+        <p className='text-base'>
+          <strong>No immediate concern.</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> is within acceptable limits{" "}
           <span className='font-bold'>{Number(normalThreshold).toFixed(2)}</span>.
         </p>
       </div>
     );
   } else {
     return (
-      <div role='alert' className='alert alert-success'>
+      <div role='alert' className='alert alert-warning'>
         <p className='text-base text-neutral-800 dark:text-neutral-50'>
-          <strong>No immediate concern.</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> is within acceptable limits{" "}
-          <span className='font-bold'>{Number(normalThreshold).toFixed(2)}</span>.`
+          <strong>Warning!</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> exceeds the normal threshold{" "}
+          <span className='font-bold'>{Number(normalThreshold).toFixed(2)}</span>.
         </p>
       </div>
     );

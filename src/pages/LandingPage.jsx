@@ -1,8 +1,8 @@
 import { FaMosquito, FaArrowRight } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 
-import desktopImg from "../assets/desktop.jpeg";
-import mobile from "../assets/mobile.jpeg";
+import desktopImg from "../assets/images/desktop.jpeg";
+import mobile from "../assets/images/mobile.jpeg";
 
 export const LandingPage = () => {
   return (

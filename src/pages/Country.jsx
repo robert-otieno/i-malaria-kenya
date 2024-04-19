@@ -1,33 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import { FaArrowRight, FaMosquito, FaPowerOff } from "react-icons/fa6";
+import { FaMosquito, FaPowerOff } from "react-icons/fa6";
 
 import { HeatMap } from "../components";
 import { useStateContext } from "../utils/ContextProvider";
 import counties from "../assets/counties.json";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { formatDate } from "../utils/utils";
 
 const Country = () => {
-  const { countries, selectedCounty, setSelectedCounty } = useStateContext();
+  const { countries, selectedCounty, setSelectedCounty, setIsAuthenticated } = useStateContext();
   const [country, setCountry] = useState(null);
   const [countryId] = useState("ken");
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
-  // Check if user is signed in
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsAuthenticated(true);
-      } else {
-        // User is signed out
-        navigate("/login");
-      }
-    });
-  }, [navigate]);
 
   useEffect(() => {
     const countryDetails = (countries, countryId) => {
@@ -44,6 +31,7 @@ const Country = () => {
     auth
       .signOut()
       .then(() => {
+        setIsAuthenticated(false);
         navigate("/");
       })
       .catch((error) => {
@@ -53,7 +41,7 @@ const Country = () => {
       });
   };
 
-  return isAuthenticated ? (
+  return (
     <div className='flex flex-col md:flex-row overflow-hidden'>
       <div className='hidden md:block heat_map w-full md:w-2/3'>
         <div className='h-screen'>
@@ -75,7 +63,7 @@ const Country = () => {
         </div>
       </div>
 
-      <section className='flex flex-col w-full md:w-1/3 h-screen'>
+      <section className='flex flex-col w-full md:w-1/3'>
         <div className='navbar bg-teal-800 text-white'>
           <div className='flex-1'>
             <FaMosquito size={32} />
@@ -89,7 +77,7 @@ const Country = () => {
               <label tabIndex={0} className='btn btn-neutral btn-sm m-1 capitalize'>
                 {selectedCounty ? selectedCounty.countyName : "Select County"}
               </label>
-              <ul tabIndex={0} className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-sm font-semibold dark:bg-gray-700 dark:text-white overflow-y-scroll'>
+              <ul tabIndex={0} className='dropdown-content z-[1] menu menu-sm p-2 shadow bg-base-100 rounded-box w-52 text-sm font-semibold dark:bg-gray-700 dark:text-white overflow-y-scroll'>
                 {counties.map((county, i) => (
                   <NavLink
                     to={`/ken/${county.code}`}
@@ -133,18 +121,6 @@ const Country = () => {
           </aside>
         </footer>
       </section>
-    </div>
-  ) : (
-    <div className='hero min-h-screen bg-base-200'>
-      <div className='hero-content text-center'>
-        <div className='max-w-md flex flex-col'>
-          <h1 className='text-5xl font-bold'>Oops!</h1>
-          <p className='py-6'>You must login to use this application. </p>
-          <NavLink to='/login' className='flex items-center gap-5 self-center rounded-lg bg-teal-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-teal-400 md:text-base'>
-            <span>Log in</span> <FaArrowRight className='w-5 md:w-6' />
-          </NavLink>
-        </div>
-      </div>
     </div>
   );
 };
