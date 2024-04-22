@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { FaMosquito } from "react-icons/fa6";
 
 // local assets
 import { LineChart } from "../components";
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
-import axios from "axios";
 import { historicalMalariaIncidence } from "../assets/data";
+import { capitalize } from "../utils/utils";
 
 export const County = () => {
   const location = useLocation();
@@ -38,7 +39,8 @@ export const County = () => {
           const predictedIncidence = await predictiveModelInference(weatherData, countyName);
           setPrediction(predictedIncidence);
         } catch (error) {
-          throw new Error(error);
+          console.error("Error during inference:", error);
+          setPrediction(null);
         } finally {
           setLoading(false);
         }
@@ -51,13 +53,6 @@ export const County = () => {
   }, [countyName, hasWeatherData, weatherData]);
 
   // Function to stored predicted values to firebase per county
-
-  const capitalize = (word) => {
-    return word
-      .split(" ")
-      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(" ");
-  };
 
   // Filter the malaria data for the selected county
   const countyData = malariaCasesPerYear[capitalize(countyName)];
@@ -155,7 +150,7 @@ const StatsCard = ({ feature, value, iconStyle, IconComponent, loading, county }
     </div>
     <h5 className='mb-2 text-[12px] md:text-sm font-medium leading-tight text-[#9a9a9a] dark:text-neutral-200 capitalize text-right'>Malaria cases (per 1000 people)</h5>
 
-    {loading ? <span className='loading loading-dots loading-sm'></span> : <>{calculateMalariaThresholds(value, county)}</>}
+    {loading ? <span className='loading loading-dots loading-sm'></span> : <>{CalculateMalariaThresholds(value, county)}</>}
   </div>
 );
 
@@ -181,26 +176,35 @@ const fetchWeatherData = async (location) => {
   }
 };
 
+// Function to run predictive model
+
 const tf = window.tf;
 const tfdf = window.tfdf;
 
 const year = new Date().getFullYear();
 const month = new Date().toLocaleString("default", { month: "long" });
 
+let modelLoaded = false;
+let model;
+
+// Load the model into memory
+const loadModel = async () => {
+  try {
+    model = await tfdf.loadTFDFModel(`http://127.0.0.1:3000/tfdf_model/model.json`);
+    modelLoaded = true;
+  } catch (error) {
+    throw new Error("Could not load TensorFlow.js model.");
+  }
+};
+
 /**
  * Model is loaded asynchronously. Hence, we initialize it here to be used later for malaria incidence prediction.
- * @param {*} weatherData
+ * @param {weatherData, countyName}
  * @returns malaria_incidence (this is the predicted malaria_incidence value)
  */
 const predictiveModelInference = async (weatherData, county) => {
-  let model;
-  let result;
-
-  // Load the model into memory
-  try {
-    model = await tfdf.loadTFDFModel(`http://127.0.0.1:3000/tfdf_model/model.json`);
-  } catch (error) {
-    throw new Error("Could not load TensorFlow.js model.");
+  if (!modelLoaded) {
+    await loadModel();
   }
 
   const weatherFeatures = {
@@ -214,11 +218,11 @@ const predictiveModelInference = async (weatherData, county) => {
 
   // Perform an inference/prediction
   try {
-    result = await model.executeAsync(weatherFeatures);
+    const result = await model.executeAsync(weatherFeatures);
+    return result.dataSync()[1];
   } catch (error) {
-    throw new Error(error);
+    throw new Error("Error during model inference.", error);
   }
-  return result.dataSync()[1];
 };
 
 /**
@@ -231,32 +235,35 @@ const predictiveModelInference = async (weatherData, county) => {
  * Alert/Epidemic Threshold: 1.5 * baseline level (indicates a critical situation)
  */
 
-function calculateMalariaThresholds(currentIncidence, county) {
-  // Historical data processed for the period from April 1st, 2024 to April 15th, 2024
-  const { data } = historicalMalariaIncidence?.find((item) => item.code === parseInt(county));
-  const averageIncidence = data.reduce((sum, value) => sum + value, 0) / data.length;
+function CalculateMalariaThresholds(currentIncidence, county) {
+  const thresholds = useMemo(() => {
+    // Historical data processed for the period from April 1st, 2024 to April 15th, 2024
+    const { data } = historicalMalariaIncidence?.find((item) => item.code === parseInt(county));
+    const averageIncidence = data.reduce((sum, value) => sum + value, 0) / data.length;
 
-  // Calculate thresholds based on average
-  const normalThreshold = averageIncidence;
-  // const warningThreshold = currentIncidence > averageIncidence || currentIncidence < 1.5 * averageIncidence ? currentIncidence : null;
-  const alertThreshold = 1.5 * averageIncidence;
+    // Calculate thresholds based on average
+    const normalThreshold = averageIncidence;
+    const alertThreshold = 1.5 * averageIncidence;
+
+    return { normalThreshold, alertThreshold };
+  }, [county]);
 
   // Analyze current incidence
-  if (currentIncidence >= alertThreshold) {
+  if (currentIncidence >= thresholds.alertThreshold) {
     return (
       <div role='alert' className='alert alert-error'>
         <p className='text-base text-neutral-50'>
           <strong>Epidemic alert!</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> exceeds the alert threshold{" "}
-          <span className='font-bold'>{Number(alertThreshold).toFixed(2)}</span>.
+          <span className='font-bold'>{Number(thresholds.alertThreshold).toFixed(2)}</span>.
         </p>
       </div>
     );
-  } else if (currentIncidence <= normalThreshold) {
+  } else if (currentIncidence <= thresholds.normalThreshold) {
     return (
       <div role='alert' className='alert alert-success'>
         <p className='text-base'>
           <strong>No immediate concern.</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> is within acceptable limits{" "}
-          <span className='font-bold'>{Number(normalThreshold).toFixed(2)}</span>.
+          <span className='font-bold'>{Number(thresholds.normalThreshold).toFixed(2)}</span>.
         </p>
       </div>
     );
@@ -265,7 +272,7 @@ function calculateMalariaThresholds(currentIncidence, county) {
       <div role='alert' className='alert alert-warning'>
         <p className='text-base text-neutral-800 dark:text-neutral-50'>
           <strong>Warning!</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> exceeds the normal threshold{" "}
-          <span className='font-bold'>{Number(normalThreshold).toFixed(2)}</span>.
+          <span className='font-bold'>{Number(thresholds.normalThreshold).toFixed(2)}</span>.
         </p>
       </div>
     );
