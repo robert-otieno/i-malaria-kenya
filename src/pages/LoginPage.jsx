@@ -51,6 +51,7 @@ export const LoginPage = () => {
                     id='email'
                     type='email'
                     name='email'
+                    autoComplete='email'
                     placeholder='Enter your email address'
                     required
                     {...register("email")}
@@ -64,6 +65,7 @@ export const LoginPage = () => {
                 </label>
                 <div className='relative'>
                   <input
+                    autoComplete='current-password'
                     className='peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500'
                     id='password'
                     type='password'

@@ -11,24 +11,23 @@ import Restricted from "./pages/Restricted";
 const App = () => {
   const { isAuthenticated } = useStateContext();
 
-  if (!isAuthenticated)
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='*' element={<Restricted />} />
-        </Routes>
-      </BrowserRouter>
-    );
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/ken' element={<Country />}>
-          <Route path='/ken/:county' element={<County />} />
-        </Route>
-        {isAuthenticated ? <Route path='*' element={<Country />} /> : null}
+        {!isAuthenticated ? (
+          <>
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='*' element={<Restricted />} />
+          </>
+        ) : (
+          <>
+            <Route path='/ken' element={<Country />}>
+              <Route path='/ken/:county' element={<County />} />
+            </Route>
+            <Route path='*' element={<Country />} />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   );

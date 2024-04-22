@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { FaMosquito } from "react-icons/fa6";
 
 // local assets
 import { LineChart } from "../components";
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
 import axios from "axios";
-// import { historicalMalariaIncidence } from "../assets/data";
+import { historicalMalariaIncidence } from "../assets/data";
 
 export const County = () => {
   const location = useLocation();
+  let { county } = useParams();
   const { countyName } = location.state;
   const [loading, setLoading] = useState(false);
   const [weatherData, setWeatherData] = useState(null);
@@ -29,16 +30,24 @@ export const County = () => {
 
   // Make a prediction using the loaded model
   useEffect(() => {
+    setLoading(true);
+
     if (hasWeatherData) {
       const fetchData = async () => {
-        setLoading(true);
-        const predictedIncidence = await predictiveModelInference(weatherData, countyName);
-        setPrediction(predictedIncidence);
-        setLoading(false);
+        try {
+          const predictedIncidence = await predictiveModelInference(weatherData, countyName);
+          setPrediction(predictedIncidence);
+        } catch (error) {
+          throw new Error(error);
+        } finally {
+          setLoading(false);
+        }
       };
 
       fetchData();
     }
+
+    setLoading(false);
   }, [countyName, hasWeatherData, weatherData]);
 
   // Function to stored predicted values to firebase per county
@@ -96,7 +105,7 @@ export const County = () => {
               <div className='stat-value text-2xl font-semibold'>{weatherData[0]}</div>
             </div>
           </div>
-          <StatsCard feature='Malaria Incidence' value={prediction} loading={loading} IconComponent={FaMosquito} iconStyle='dark:text-primary-content' />
+          <StatsCard county={county} feature='Malaria Incidence' value={prediction} loading={loading} IconComponent={FaMosquito} iconStyle='dark:text-primary-content' />
         </div>
       )}
 
@@ -136,7 +145,7 @@ export const County = () => {
   );
 };
 
-const StatsCard = ({ feature, value, iconStyle, IconComponent, loading }) => (
+const StatsCard = ({ feature, value, iconStyle, IconComponent, loading, county }) => (
   <div className='block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 p-4 w-full'>
     <div className='flex flex-row justify-between align-bottom'>
       {IconComponent && <IconComponent className={iconStyle} size={36} />}
@@ -146,7 +155,7 @@ const StatsCard = ({ feature, value, iconStyle, IconComponent, loading }) => (
     </div>
     <h5 className='mb-2 text-[12px] md:text-sm font-medium leading-tight text-[#9a9a9a] dark:text-neutral-200 capitalize text-right'>Malaria cases (per 1000 people)</h5>
 
-    {loading ? <span className='loading loading-dots loading-sm'></span> : <>{calculateMalariaThresholds(value)}</>}
+    {loading ? <span className='loading loading-dots loading-sm'></span> : <>{calculateMalariaThresholds(value, county)}</>}
   </div>
 );
 
@@ -184,9 +193,10 @@ const month = new Date().toLocaleString("default", { month: "long" });
  * @returns malaria_incidence (this is the predicted malaria_incidence value)
  */
 const predictiveModelInference = async (weatherData, county) => {
-  // Load the model into memory
   let model;
+  let result;
 
+  // Load the model into memory
   try {
     model = await tfdf.loadTFDFModel(`http://127.0.0.1:3000/tfdf_model/model.json`);
   } catch (error) {
@@ -202,9 +212,12 @@ const predictiveModelInference = async (weatherData, county) => {
     temperature: tf.tensor([weatherData[0]]),
   };
 
-  // Perform an inference
-  const result = await model.executeAsync(weatherFeatures);
-
+  // Perform an inference/prediction
+  try {
+    result = await model.executeAsync(weatherFeatures);
+  } catch (error) {
+    throw new Error(error);
+  }
   return result.dataSync()[1];
 };
 
@@ -218,13 +231,10 @@ const predictiveModelInference = async (weatherData, county) => {
  * Alert/Epidemic Threshold: 1.5 * baseline level (indicates a critical situation)
  */
 
-// Sample historical data
-const historicalMalariaData = [13.917402, 15.637864, 14.0985, 14.177317, 14.395688, 14.897078, 14.326687, 14.646455, 14.345443, 15.155089, 15.668318, 13.974785, 14.890237, 14.870568, 15.312928];
-
-function calculateMalariaThresholds(currentIncidence) {
+function calculateMalariaThresholds(currentIncidence, county) {
   // Historical data processed for the period from April 1st, 2024 to April 15th, 2024
-  const recentData = historicalMalariaData.slice(-15);
-  const averageIncidence = recentData.reduce((sum, value) => sum + value, 0) / recentData.length;
+  const { data } = historicalMalariaIncidence?.find((item) => item.code === parseInt(county));
+  const averageIncidence = data.reduce((sum, value) => sum + value, 0) / data.length;
 
   // Calculate thresholds based on average
   const normalThreshold = averageIncidence;

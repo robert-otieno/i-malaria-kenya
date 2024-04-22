@@ -52,7 +52,7 @@
     }
   },
   {
-    "name": "Elgeyo_Marakwet",
+    "name": "Elgeyo-Marakwet",
     "capital": "Iten",
     "lat": "0.6703",
     "lng": "35.5081",
@@ -91,7 +91,7 @@
     }
   },
   {
-    "name": "Homa_Bay",
+    "name": "Homa Bay",
     "capital": "Homa Bay",
     "lat": "-0.5273",
     "lng": "34.4571",
@@ -527,7 +527,7 @@
     }
   },
   {
-    "name": "Taita_Taveta",
+    "name": "Taita Taveta",
     "capital": "Voi",
     "lat": "-3.396",
     "lng": "38.5561",
@@ -540,7 +540,7 @@
     }
   },
   {
-    "name": "Tana_River",
+    "name": "Tana River",
     "capital": "Hola",
     "lat": "-1.4826",
     "lng": "40.0334",
@@ -553,7 +553,7 @@
     }
   },
   {
-    "name": "Tharaka_Nithi",
+    "name": "Tharaka Nithi",
     "capital": "Chuka",
     "lat": "-0.3332",
     "lng": "37.6459",
@@ -566,7 +566,7 @@
     }
   },
   {
-    "name": "Trans_Nzoia",
+    "name": "Trans Nzoia",
     "capital": "Kitale",
     "lat": "1.0157",
     "lng": "35.0062",
@@ -592,7 +592,7 @@
     }
   },
   {
-    "name": "Uasin_Gishu",
+    "name": "Uasin Gishu",
     "capital": "Eldoret",
     "lat": "0.5204",
     "lng": "35.2699",
@@ -631,7 +631,7 @@
     }
   },
   {
-    "name": "West_Pokot",
+    "name": "West Pokot",
     "capital": "Kapenguria",
     "lat": "1.2389",
     "lng": "35.1119",
