@@ -7,7 +7,7 @@ import { FaMosquito } from "react-icons/fa6";
 import { LineChart } from "../components";
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
 import { historicalMalariaIncidence } from "../assets/data";
-import { capitalize } from "../utils/utils";
+import { capitalize, getLatLng } from "../utils/utils";
 
 export const County = () => {
   const location = useLocation();
@@ -18,16 +18,17 @@ export const County = () => {
   const [prediction, setPrediction] = useState(null);
 
   const [hasWeatherData, setHasWeatherData] = useState(false);
+  const { lat, lng } = getLatLng(countyName);
 
   // Fetch weather data
   useEffect(() => {
     const fetchData = async () => {
-      const weatherData = await fetchWeatherData(countyName);
+      const weatherData = await fetchWeatherData(lat, lng);
       setWeatherData(weatherData);
       setHasWeatherData(true); // Signal that weather data is fetched
     };
     fetchData();
-  }, [countyName]);
+  }, [lat, lng]);
 
   // Make a prediction using the loaded model
   useEffect(() => {
@@ -154,12 +155,12 @@ const StatsCard = ({ feature, value, iconStyle, IconComponent, loading, county }
   </div>
 );
 
-const fetchWeatherData = async (location) => {
+const fetchWeatherData = async (lat, lng) => {
   try {
     const { data } = await axios.request({
       method: "GET",
       url: "https://weatherapi-com.p.rapidapi.com/current.json",
-      params: { q: `${location}` },
+      params: { q: `${lat},${lng}` },
       headers: {
         "X-RapidAPI-Key": "98d5f6252dmsh6d86ab92df5d9d5p1dc650jsn0e282e3b3c32",
         "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import counties from "../assets/counties.json";
+
 export const capitalize = (word) => {
   return word
     .split(" ")
@@ -94,4 +96,9 @@ export const getCountry = (countriesData) => {
     return 0;
   });
   return countries;
+};
+
+export const getLatLng = (name) => {
+  const county = counties?.find((county) => county.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+  return county ? { lat: county.lat, lng: county.lng } : null;
 };
