@@ -98,7 +98,7 @@ export const getCountry = (countriesData) => {
   return countries;
 };
 
-export const getLatLng = (name) => {
-  const county = counties?.find((county) => county.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+export const getLatLng = (code) => {
+  const county = counties?.find((county) => county.code === parseInt(code));
   return county ? { lat: county.lat, lng: county.lng } : null;
 };

@@ -8,6 +8,7 @@ import { LineChart } from "../components";
 import malariaCasesPerYear from "../assets/total_malaria_cases_per_year_over_the_last_5_years.json";
 import { historicalMalariaIncidence } from "../assets/data";
 import { capitalize, getLatLng } from "../utils/utils";
+import { getWeatherData } from "../utils/weatherData";
 
 export const County = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ export const County = () => {
   const [prediction, setPrediction] = useState(null);
 
   const [hasWeatherData, setHasWeatherData] = useState(false);
-  const { lat, lng } = getLatLng(countyName);
+  const { lat, lng } = getLatLng(county);
 
   // Fetch weather data
   useEffect(() => {
@@ -88,17 +89,17 @@ export const County = () => {
           <div className='stats shadow w-full'>
             <div className='stat place-items-center'>
               <div className='stat-title text-sm md:text-base flex flex-row items-center gap-1'>Precipitation</div>
-              <div className='stat-value text-2xl font-semibold'>{weatherData[2]}</div>
+              <div className='stat-value text-2xl font-semibold'>{Number(weatherData[2]).toFixed(2)}</div>
             </div>
 
             <div className='stat place-items-center'>
               <div className='stat-title text-sm md:text-base flex flex-row items-center gap-1'>Humidity</div>
-              <div className='stat-value text-2xl font-semibold'>{weatherData[1]}</div>
+              <div className='stat-value text-2xl font-semibold'>{Number(weatherData[1]).toFixed(2)}</div>
             </div>
 
             <div className='stat place-items-center'>
               <div className='stat-title text-sm md:text-base flex flex-row items-center gap-1'>Temperature</div>
-              <div className='stat-value text-2xl font-semibold'>{weatherData[0]}</div>
+              <div className='stat-value text-2xl font-semibold'>{Number(weatherData[0]).toFixed(2)}</div>
             </div>
           </div>
           <StatsCard county={county} feature='Malaria Incidence' value={prediction} loading={loading} IconComponent={FaMosquito} iconStyle='dark:text-primary-content' />
@@ -157,18 +158,27 @@ const StatsCard = ({ feature, value, iconStyle, IconComponent, loading, county }
 
 const fetchWeatherData = async (lat, lng) => {
   try {
-    const { data } = await axios.request({
-      method: "GET",
-      url: "https://weatherapi-com.p.rapidapi.com/current.json",
-      params: { q: `${lat},${lng}` },
-      headers: {
-        "X-RapidAPI-Key": "98d5f6252dmsh6d86ab92df5d9d5p1dc650jsn0e282e3b3c32",
-        "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
-      },
-    });
+    // Source of current Data - WeatherAPI.com
+    // const { data } = await axios.request({
+    //   method: "GET",
+    //   url: "https://weatherapi-com.p.rapidapi.com/current.json",
+    //   params: { q: `${lat},${lng}` },
+    //   headers: {
+    //     "X-RapidAPI-Key": "98d5f6252dmsh6d86ab92df5d9d5p1dc650jsn0e282e3b3c32",
+    //     "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
+    //   },
+    // });
 
-    const { humidity, temp_c, precip_mm } = data.current;
-    const weatherData = [temp_c, humidity, precip_mm];
+    // const { humidity, temp_c, precip_mm } = data.current;
+    // const weatherData = [temp_c, humidity, precip_mm];
+
+    // return weatherData;
+
+    // Source: open-meteo.com
+    const { current } = await getWeatherData(lat, lng);
+
+    const { relativeHumidity2m, temperature2m, precipitation } = current;
+    const weatherData = [temperature2m, relativeHumidity2m, precipitation];
 
     return weatherData;
   } catch (error) {
@@ -212,7 +222,7 @@ const predictiveModelInference = async (weatherData, county) => {
     county: tf.tensor([county]),
     month: tf.tensor([month]),
     year: tf.cast(tf.tensor([year]), "int32"),
-    precipitation: tf.tensor([weatherData[2] * 25.4]),
+    precipitation: tf.tensor([weatherData[2]]),
     relative_humidity: tf.tensor([weatherData[1]]),
     temperature: tf.tensor([weatherData[0]]),
   };
@@ -254,7 +264,7 @@ function CalculateMalariaThresholds(currentIncidence, county) {
     return (
       <div role='alert' className='alert alert-error'>
         <p className='text-base text-neutral-50'>
-          <strong>Epidemic alert!</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> exceeds the alert threshold{" "}
+          <strong>Action!</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> exceeds the alert threshold{" "}
           <span className='font-bold'>{Number(thresholds.alertThreshold).toFixed(2)}</span>.
         </p>
       </div>
@@ -272,7 +282,7 @@ function CalculateMalariaThresholds(currentIncidence, county) {
     return (
       <div role='alert' className='alert alert-warning'>
         <p className='text-base text-neutral-800 dark:text-neutral-50'>
-          <strong>Warning!</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> exceeds the normal threshold{" "}
+          <strong>Alert!</strong> Current incidence <span className='font-bold'>{Number(currentIncidence).toFixed(2)}</span> exceeds the normal threshold{" "}
           <span className='font-bold'>{Number(thresholds.normalThreshold).toFixed(2)}</span>.
         </p>
       </div>
