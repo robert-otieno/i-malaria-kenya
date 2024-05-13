@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import countiesData from "../assets/kenya.geojson.json";
 import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../utils/ContextProvider";
+import { capitalize } from "../utils/utils";
 
 const HeatMap = () => {
   const kenyaCenter = [-1.2921, 36.8219];
@@ -14,8 +15,8 @@ const HeatMap = () => {
   const onEachFeature = (feature, layer) => {
     layer.on({
       click: () => {
-        navigate(`/ken/${feature.properties.COUNTY_COD}`, { state: { countyName: feature.properties.COUNTY_NAM.toLowerCase() } });
-        setSelectedCounty({ countyName: feature.properties.COUNTY_NAM.toLowerCase(), countyCode: feature.properties.COUNTY_COD });
+        navigate(`/ken/${feature.properties.COUNTY_COD}`, { state: { countyName: capitalize(feature.properties.COUNTY_NAM) } });
+        setSelectedCounty({ countyName: capitalize(feature.properties.COUNTY_NAM), countyCode: feature.properties.COUNTY_COD });
       },
     });
   };

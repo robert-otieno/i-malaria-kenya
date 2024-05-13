@@ -83,7 +83,10 @@ const Country = () => {
                     to={`/ken/${county.code}`}
                     key={i}
                     state={{ countyName: county.name }}
-                    onClick={() => setSelectedCounty({ countyName: county.name, countyCode: county.code })}
+                    onClick={() => {
+                      setSelectedCounty({ countyName: county.name, countyCode: county.code });
+                      console.log({ countyName: county.name, countyCode: county.code });
+                    }}
                     className='block py-2 px-4 w-full border-b text-teal-900 border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-700 focus:text-teal-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white'
                   >
                     <div className='flex items-center justify-between'>
